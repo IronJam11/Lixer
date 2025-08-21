@@ -3,7 +3,7 @@ type Swap @entity(immutable: true) {
   transaction: Bytes! # transaction hash
   timestamp: BigInt!
   blockNumber: BigInt!
-  pool: Bytes! # pool address
+  pool: Pool! # reference to Pool entity
   sender: Bytes!
   recipient: Bytes!
   amount0: BigInt!
@@ -13,6 +13,14 @@ type Swap @entity(immutable: true) {
   tick: Int!
   gasUsed: BigInt!
   gasPrice: BigInt!
+}
+
+type Pool @entity(immutable: false) {
+  id: ID! # pool address (contract address)
+  swapCount: BigInt!
+  totalVolumeAmount0: BigInt!
+  totalVolumeAmount1: BigInt!
+  swaps: [Swap!]! @derivedFrom(field: "pool")
 }
 
 
