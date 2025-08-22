@@ -1,0 +1,20 @@
+{
+    "pools": [
+    {
+        "address": "0x1234567890abcdef1234567890abcdef12345678",
+        "dex": "Hyperswap",
+        "token0":[
+            {
+                "symbol": "HYPE",
+                "address": "0x1234567890abcdef1234567890abcdef12345678"
+            }
+        ],
+        "token1": [
+            {
+                "symbol": "USDT",
+                "address": "0x1234567890abcdef1234567890abcdef12345679"
+            }
+        ]
+    }
+]
+}
