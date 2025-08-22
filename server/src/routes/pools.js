@@ -66,7 +66,7 @@ router.get('/:poolAddress/timeseries/swaps', async (req, res) => {
       return res.status(400).json({ error: 'Interval must be "hour" or "day"' });
     }
 
-    if (limit > 168) { // Max 1 week of hourly data
+    if (limit > 168) { 
       return res.status(400).json({ error: 'Limit cannot exceed 168' });
     }
 
