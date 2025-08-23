@@ -34,7 +34,15 @@ async function testSDK() {
     const pools = await sdk.pools().getAll();
     console.log('PASS: Retrieved', pools.length, 'pools');
     
-   
+    // Test 4: Get stats
+    console.log('\n[TEST] Stats.getGlobal()');
+    const stats = await sdk.stats().getGlobal();
+    console.log('PASS: Global stats retrieved successfully');
+    console.log('Total Swaps:', stats.totalSwaps);
+    console.log('Active Pools:', stats.activePools);
+    
+    // Test 5: Get all swaps
+
     
   } catch (error) {
     console.error('TEST FAILED:', error.message);
