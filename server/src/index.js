@@ -28,7 +28,9 @@ app.get('/', (req, res) => {
       pools: '/pools',
       stats: '/stats',
       timeseries: '/timeseries',
-      health: '/health'
+      health: '/health',
+      factories: '/factories',
+      tokens: '/tokens'
     }
   });
 });

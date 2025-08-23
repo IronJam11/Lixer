@@ -92,15 +92,33 @@ class SubgraphService {
     return data.swap ? this.formatSwap(data.swap) : null;
   }
 
-  // Get pools
+  
   async getPools() {
     const query = `
       query GetPools {
         pools(orderBy: swapCount, orderDirection: desc) {
           id
+          factory {
+            id
+          }
+          token0 {
+            id
+            decimals
+          }
+          token1 {
+            id
+            decimals
+          }
+          fee
+          tickSpacing
+          liquidity
+          sqrtPrice
+          tick
+          volumeToken0
+          volumeToken1
           swapCount
-          totalVolumeAmount0
-          totalVolumeAmount1
+          createdAtTimestamp
+          createdAtBlockNumber
         }
       }
     `;
@@ -116,8 +134,8 @@ class SubgraphService {
         pools {
           id
           swapCount
-          totalVolumeAmount0
-          totalVolumeAmount1
+          volumeToken0
+          volumeToken1
         }
         swaps(
           first: 1000,
@@ -148,7 +166,6 @@ class SubgraphService {
     };
   }
 
-  // Get pool-specific stats
   async getPoolStats(poolAddress) {
     const timestamp24hAgo = Math.floor(Date.now() / 1000) - 86400;
     
@@ -157,8 +174,8 @@ class SubgraphService {
         pool(id: $poolId) {
           id
           swapCount
-          totalVolumeAmount0
-          totalVolumeAmount1
+          volumeToken0
+          volumeToken1
         }
         swaps(
           first: 1000,
@@ -200,7 +217,7 @@ class SubgraphService {
     };
   }
 
-  // Get volume time series
+ 
   async getVolumeTimeSeries(interval = 'hour', limit = 24, poolAddress = null) {
     const now = Math.floor(Date.now() / 1000);
     const intervalSeconds = interval === 'hour' ? 3600 : 86400;
@@ -225,7 +242,6 @@ class SubgraphService {
 
     const data = await this.query(query, { startTime: startTime.toString() });
     
-    // Group swaps by time buckets
     const buckets = {};
     
     data.swaps.forEach(swap => {
