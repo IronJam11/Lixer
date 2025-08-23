@@ -47,7 +47,26 @@ async function testSDK() {
     console.log('PASS: Retrieved', swapsResponse.data ? swapsResponse.data.length : 0, 'swaps');
     
     // Test 6: If pools exist, test pool-specific methods
-
+    if (pools && pools.length > 0) {
+      const firstPool = pools[0];
+      const poolId = firstPool.id || firstPool.address;
+      
+      console.log('\n[TEST] Pool-specific methods for pool:', poolId);
+      
+      // Test pool swaps
+      const poolSwapsResponse = await sdk.pools().getSwaps(poolId, { limit: 5 });
+      console.log('PASS: Pool.getSwaps() retrieved', 
+        poolSwapsResponse.data ? poolSwapsResponse.data.length : 0, 'swaps');
+      
+      // Test pool timeseries
+      const timeseriesResponse = await sdk.pools().getTimeSeries(poolId, { limit: 5 });
+      console.log('PASS: Pool.getTimeSeries() retrieved', 
+        timeseriesResponse.data ? timeseriesResponse.data.length : 0, 'entries');
+    }
+    
+    console.log('\n------------------------------');
+    console.log('All SDK tests completed successfully');
+    console.log('------------------------------');
     
   } catch (error) {
     console.error('TEST FAILED:', error.message);
