@@ -42,6 +42,11 @@ async function testSDK() {
     console.log('Active Pools:', stats.activePools);
     
     // Test 5: Get all swaps
+    console.log('\n[TEST] Swaps.getAll()');
+    const swapsResponse = await sdk.swaps().getAll({ limit: 5 });
+    console.log('PASS: Retrieved', swapsResponse.data ? swapsResponse.data.length : 0, 'swaps');
+    
+    // Test 6: If pools exist, test pool-specific methods
 
     
   } catch (error) {
