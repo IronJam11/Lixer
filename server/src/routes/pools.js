@@ -55,7 +55,6 @@ router.get('/:poolAddress/swaps', async (req, res) => {
   }
 });
 
-// GET /pools/:poolAddress/timeseries/swaps - Get swap time series for specific pool
 router.get('/:poolAddress/timeseries/swaps', async (req, res) => {
   try {
     const { poolAddress } = req.params;
