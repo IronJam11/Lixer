@@ -1,8 +1,6 @@
 import "@/css/satoshi.css";
 import "@/css/style.css";
 
-import { Sidebar } from "@/components/Layouts/sidebar";
-
 import "flatpickr/dist/flatpickr.min.css";
 import "jsvectormap/dist/jsvectormap.css";
 
@@ -29,8 +27,6 @@ export default function RootLayout({ children }: PropsWithChildren) {
           <NextTopLoader color="#5750F1" showSpinner={false} />
 
           <div className="flex min-h-screen">
-            <Sidebar />
-
             <div className="w-full bg-gray-2 dark:bg-[#020d1a]">
               <Header />
 
