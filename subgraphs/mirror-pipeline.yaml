@@ -32,3 +32,4 @@ sinks:
     from: source_2
     table: swaps
     schema: public
+
