@@ -3,23 +3,51 @@ schema:
   file: ./schema.graphql
 dataSources:
   - kind: ethereum/contract
-    name: Pool
+    name: Factory
     network: hyperevm
     source:
-      address: "0x337b56d87A6185cD46AF3Ac2cDF03CBC37070C30" 
-      abi: Pool
-      startBlock: 8663243
+      address: "0xB1c0fa0B789320044A6F623cFe5eBda9562602E3"
+      abi: Factory
+      startBlock: 11548
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.7
       language: wasm/assemblyscript
       entities:
-        - Swap
+        - Factory
         - Pool
+        - Token
       abis:
+        - name: Factory
+          file: ./abi/Factory.json
         - name: Pool
           file: ./abi/Pool.json
       eventHandlers:
+        - event: PoolCreated(indexed address,indexed address,indexed uint24,int24,address)
+          handler: handlePoolCreated
+      file: ./src/mappings.ts
+templates:
+  - kind: ethereum/contract
+    name: Pool
+    network: hyperevm
+    source:
+      abi: Pool
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - Pool
+        - Swap
+        - Token
+      abis:
+        - name: Pool
+          file: ./abi/Pool.json
+        - name: Factory
+          file: ./abi/Factory.json
+      eventHandlers:
         - event: Swap(indexed address,indexed address,int256,int256,uint160,uint128,int24)
           handler: handleSwap
+        - event: Initialize(uint160,int24)
+          handler: handleInitialize
       file: ./src/mappings.ts
