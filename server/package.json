@@ -7,16 +7,22 @@
     "dev": "nodemon src/index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": ["graphql", "subgraph", "api", "express"],
+  "keywords": [
+    "graphql",
+    "subgraph",
+    "api",
+    "express"
+  ],
   "author": "",
   "license": "ISC",
   "description": "REST API server for Lixer subgraph",
   "dependencies": {
-    "express": "^4.18.2",
+    "axios": "^1.6.0",
     "cors": "^2.8.5",
     "dotenv": "^16.3.1",
-    "axios": "^1.6.0",
-    "ethers": "^6.15.0"
+    "ethers": "^6.15.0",
+    "express": "^4.18.2",
+    "pg": "^8.16.3"
   },
   "devDependencies": {
     "nodemon": "^3.0.1"
