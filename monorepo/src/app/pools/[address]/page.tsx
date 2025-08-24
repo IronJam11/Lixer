@@ -2,6 +2,8 @@
 
 import { useEffect, useState } from 'react';
 import { useParams } from 'next/navigation';
+import Image from 'next/image';
+import lixerLogo from '@/assets/logos/Lixer.png';
 import axios from 'axios';
 import {
   LineChart,
@@ -138,10 +140,10 @@ export default function PoolAnalytics() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex items-center justify-center">
-        <div className="text-center">
-          <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-indigo-600 mx-auto"></div>
-          <p className="mt-4 text-lg text-gray-600">Loading pool analytics...</p>
+      <div className="min-h-screen bg-gradient-to-br from-black via-gray-900 to-teal-900 flex items-center justify-center">
+        <div className="flex flex-col items-center">
+          <Image src={lixerLogo} width={96} height={96} alt="Lixer logo" className="animate-bounce mb-6" />
+          <div className="text-gray-300 text-xl font-light">Loading analytics...</div>
         </div>
       </div>
     );
@@ -164,187 +166,239 @@ export default function PoolAnalytics() {
       </div>
     );
   }
+return (
+  <div className="min-h-screen bg-black p-4">
+    <div className="max-w-7xl mx-auto">
+      {/* Header */}
+      <div className="mb-8">
+        <h1 className="text-5xl font-light text-white mb-4">
+          Pool Analytics Dashboard
+        </h1>
+        <p className="text-lg text-gray-400">
+          Pool Address: <span className="font-mono bg-gray-900 px-3 py-2 rounded text-teal-300">{poolAddress}</span>
+        </p>
+      </div>
 
-  return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 p-4">
-      <div className="max-w-7xl mx-auto">
-        {/* Header */}
-        <div className="mb-8">
-          <h1 className="text-4xl font-bold text-gray-800 mb-2">Pool Analytics Dashboard</h1>
-          <p className="text-lg text-gray-600">
-            Pool Address: <span className="font-mono bg-gray-100 px-2 py-1 rounded">{poolAddress}</span>
-          </p>
-        </div>
-
-        {/* Stats Cards */}
-        {poolStats && (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-            <div className="bg-white rounded-xl shadow-lg p-6 border-l-4 border-blue-500">
-              <div className="flex items-center">
-                <Activity className="h-8 w-8 text-blue-500 mr-3" />
-                <div>
-                  <p className="text-sm font-medium text-gray-600">24h Swaps</p>
-                  <p className="text-2xl font-bold text-gray-900">{poolStats.swapCount24h.toLocaleString()}</p>
-                </div>
+      {/* Stats Cards */}
+      {poolStats && (
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+          <div className="bg-gray-900 rounded-2xl shadow-xl p-6 border border-teal-500/20">
+            <div className="flex items-center">
+              <div className="p-3 bg-teal-500/20 rounded-xl mr-4">
+                <Activity className="h-8 w-8 text-teal-400" />
               </div>
-            </div>
-
-            <div className="bg-white rounded-xl shadow-lg p-6 border-l-4 border-green-500">
-              <div className="flex items-center">
-                <TrendingUp className="h-8 w-8 text-green-500 mr-3" />
-                <div>
-                  <p className="text-sm font-medium text-gray-600">24h Volume</p>
-                  <p className="text-2xl font-bold text-gray-900">{formatVolume(poolStats.volume24h)}</p>
-                </div>
-              </div>
-            </div>
-
-            <div className="bg-white rounded-xl shadow-lg p-6 border-l-4 border-purple-500">
-              <div className="flex items-center">
-                <DollarSign className="h-8 w-8 text-purple-500 mr-3" />
-                <div>
-                  <p className="text-sm font-medium text-gray-600">Avg Swap Size</p>
-                  <p className="text-2xl font-bold text-gray-900">{formatVolume(poolStats.averageSwapSize)}</p>
-                </div>
-              </div>
-            </div>
-
-            <div className="bg-white rounded-xl shadow-lg p-6 border-l-4 border-orange-500">
-              <div className="flex items-center">
-                <Users className="h-8 w-8 text-orange-500 mr-3" />
-                <div>
-                  <p className="text-sm font-medium text-gray-600">Unique Traders</p>
-                  <p className="text-2xl font-bold text-gray-900">{poolStats.uniqueTraders24h}</p>
-                </div>
+              <div>
+                <p className="text-sm font-medium text-gray-400 mb-1">24h Swaps</p>
+                <p className="text-3xl font-light text-white">{poolStats.swapCount24h.toLocaleString()}</p>
               </div>
             </div>
           </div>
-        )}
 
-        {/* Charts */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
-          {/* Volume Time Series */}
-          <div className="bg-white rounded-xl shadow-lg p-6">
-            <h3 className="text-xl font-bold text-gray-800 mb-4">Volume Over Time</h3>
+          <div className="bg-gray-900 rounded-2xl shadow-xl p-6 border border-teal-500/20">
+            <div className="flex items-center">
+              <div className="p-3 bg-teal-500/20 rounded-xl mr-4">
+                <TrendingUp className="h-8 w-8 text-teal-400" />
+              </div>
+              <div>
+                <p className="text-sm font-medium text-gray-400 mb-1">24h Volume</p>
+                <p className="text-3xl font-light text-white">{formatVolume(poolStats.volume24h)}</p>
+              </div>
+            </div>
+          </div>
+
+          <div className="bg-gray-900 rounded-2xl shadow-xl p-6 border border-teal-500/20">
+            <div className="flex items-center">
+              <div className="p-3 bg-teal-500/20 rounded-xl mr-4">
+                <DollarSign className="h-8 w-8 text-teal-400" />
+              </div>
+              <div>
+                <p className="text-sm font-medium text-gray-400 mb-1">Avg Swap Size</p>
+                <p className="text-3xl font-light text-white">{formatVolume(poolStats.averageSwapSize)}</p>
+              </div>
+            </div>
+          </div>
+
+          <div className="bg-gray-900 rounded-2xl shadow-xl p-6 border border-teal-500/20">
+            <div className="flex items-center">
+              <div className="p-3 bg-teal-500/20 rounded-xl mr-4">
+                <Users className="h-8 w-8 text-teal-400" />
+              </div>
+              <div>
+                <p className="text-sm font-medium text-gray-400 mb-1">Unique Traders</p>
+                <p className="text-3xl font-light text-white">{poolStats.uniqueTraders24h}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Charts */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
+        {/* Volume Time Series */}
+        <div className="bg-gray-900 rounded-2xl shadow-xl p-6 border border-gray-800">
+          <h3 className="text-2xl font-light text-white mb-6">
+            Volume Over Time
+          </h3>
+          <div className="bg-black/50 rounded-xl p-4">
             <ResponsiveContainer width="100%" height={300}>
               <LineChart data={chartTimeSeriesData}>
-                <CartesianGrid strokeDasharray="3 3" />
-                <XAxis dataKey="time" />
-                <YAxis tickFormatter={(value) => `${value.toFixed(0)}E`} />
+                <CartesianGrid strokeDasharray="3 3" stroke="#374151" />
+                <XAxis dataKey="time" stroke="#9CA3AF" />
+                <YAxis tickFormatter={(value) => `${value.toFixed(0)}E`} stroke="#9CA3AF" />
                 <Tooltip 
                   formatter={(value: number) => [`${value.toFixed(2)}E`, 'Volume']}
                   labelFormatter={(label) => `Time: ${label}`}
+                  contentStyle={{ 
+                    backgroundColor: '#111827', 
+                    border: '1px solid #374151',
+                    borderRadius: '12px',
+                    color: '#F9FAFB'
+                  }}
                 />
                 <Line 
                   type="monotone" 
                   dataKey="volume" 
-                  stroke="#8884d8" 
+                  stroke="#14B8A6" 
                   strokeWidth={2}
-                  dot={{ fill: '#8884d8', strokeWidth: 2, r: 4 }}
+                  dot={{ fill: '#14B8A6', strokeWidth: 2, r: 4 }}
+                  activeDot={{ r: 6, fill: '#0D9488' }}
                 />
               </LineChart>
             </ResponsiveContainer>
           </div>
+        </div>
 
-          {/* Recent Swaps Bar Chart */}
-          <div className="bg-white rounded-xl shadow-lg p-6">
-            <h3 className="text-xl font-bold text-gray-800 mb-4">Recent Swap Amounts</h3>
+        {/* Recent Swaps Bar Chart */}
+        <div className="bg-gray-900 rounded-2xl shadow-xl p-6 border border-gray-800">
+          <h3 className="text-2xl font-light text-white mb-6">
+            Recent Swap Amounts
+          </h3>
+          <div className="bg-black/50 rounded-xl p-4">
             <ResponsiveContainer width="100%" height={300}>
               <BarChart data={recentSwapsData}>
-                <CartesianGrid strokeDasharray="3 3" />
-                <XAxis dataKey="name" />
-                <YAxis />
-                <Tooltip />
-                <Bar dataKey="amount0" fill="#8884d8" name="Amount 0" />
-                <Bar dataKey="amount1" fill="#82ca9d" name="Amount 1" />
+                <CartesianGrid strokeDasharray="3 3" stroke="#374151" />
+                <XAxis dataKey="name" stroke="#9CA3AF" />
+                <YAxis stroke="#9CA3AF" />
+                <Tooltip 
+                  contentStyle={{ 
+                    backgroundColor: '#111827', 
+                    border: '1px solid #374151',
+                    borderRadius: '12px',
+                    color: '#F9FAFB'
+                  }}
+                />
+                <Bar dataKey="amount0" fill="#14B8A6" name="Amount 0" />
+                <Bar dataKey="amount1" fill="#0D9488" name="Amount 1" />
               </BarChart>
             </ResponsiveContainer>
           </div>
         </div>
+      </div>
 
-        {/* Gas Usage Chart */}
-        <div className="bg-white rounded-xl shadow-lg p-6 mb-8">
-          <h3 className="text-xl font-bold text-gray-800 mb-4">Gas Usage Analysis</h3>
+      {/* Gas Usage Chart */}
+      <div className="bg-gray-900 rounded-2xl shadow-xl p-6 mb-8 border border-gray-800">
+        <h3 className="text-2xl font-light text-white mb-6">
+          Gas Usage Analysis
+        </h3>
+        <div className="bg-black/50 rounded-xl p-4">
           <ResponsiveContainer width="100%" height={300}>
             <LineChart data={gasUsageData}>
-              <CartesianGrid strokeDasharray="3 3" />
-              <XAxis dataKey="swap" />
-              <YAxis yAxisId="left" orientation="left" />
-              <YAxis yAxisId="right" orientation="right" />
-              <Tooltip />
+              <CartesianGrid strokeDasharray="3 3" stroke="#374151" />
+              <XAxis dataKey="swap" stroke="#9CA3AF" />
+              <YAxis yAxisId="left" orientation="left" stroke="#9CA3AF" />
+              <YAxis yAxisId="right" orientation="right" stroke="#9CA3AF" />
+              <Tooltip 
+                contentStyle={{ 
+                  backgroundColor: '#111827', 
+                  border: '1px solid #374151',
+                  borderRadius: '12px',
+                  color: '#F9FAFB'
+                }}
+              />
               <Line 
                 yAxisId="left"
                 type="monotone" 
                 dataKey="gasUsed" 
-                stroke="#8884d8" 
+                stroke="#14B8A6" 
+                strokeWidth={2}
                 name="Gas Used"
+                dot={{ fill: '#14B8A6', strokeWidth: 2, r: 3 }}
               />
               <Line 
                 yAxisId="right"
                 type="monotone" 
                 dataKey="gasPrice" 
-                stroke="#82ca9d" 
+                stroke="#0D9488" 
+                strokeWidth={2}
                 name="Gas Price (Gwei)"
+                dot={{ fill: '#0D9488', strokeWidth: 2, r: 3 }}
               />
             </LineChart>
           </ResponsiveContainer>
         </div>
+      </div>
 
-        {/* Recent Swaps Table */}
-        <div className="bg-white rounded-xl shadow-lg p-6">
-          <h3 className="text-xl font-bold text-gray-800 mb-4">Recent Swaps</h3>
-          <div className="overflow-x-auto">
-            <table className="min-w-full table-auto">
-              <thead>
-                <tr className="bg-gray-50">
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    Transaction
-                  </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    Sender
-                  </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    Amount 0
-                  </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    Amount 1
-                  </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    Timestamp
-                  </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    Gas Used
-                  </th>
+      {/* Recent Swaps Table */}
+      <div className="bg-gray-900 rounded-2xl shadow-xl p-6 border border-gray-800">
+        <h3 className="text-2xl font-light text-white mb-6">
+          Recent Swaps
+        </h3>
+        <div className="overflow-x-auto">
+          <table className="min-w-full table-auto">
+            <thead>
+              <tr className="bg-black/30">
+                <th className="px-6 py-4 text-left text-sm font-medium text-teal-300 uppercase tracking-wider border-b border-gray-800">
+                  Transaction
+                </th>
+                <th className="px-6 py-4 text-left text-sm font-medium text-gray-400 uppercase tracking-wider border-b border-gray-800">
+                  Sender
+                </th>
+                <th className="px-6 py-4 text-left text-sm font-medium text-gray-400 uppercase tracking-wider border-b border-gray-800">
+                  Amount 0
+                </th>
+                <th className="px-6 py-4 text-left text-sm font-medium text-gray-400 uppercase tracking-wider border-b border-gray-800">
+                  Amount 1
+                </th>
+                <th className="px-6 py-4 text-left text-sm font-medium text-gray-400 uppercase tracking-wider border-b border-gray-800">
+                  Timestamp
+                </th>
+                <th className="px-6 py-4 text-left text-sm font-medium text-gray-400 uppercase tracking-wider border-b border-gray-800">
+                  Gas Used
+                </th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-gray-800">
+              {swapsData.slice(0, 10).map((swap, index) => (
+                <tr 
+                  key={swap.id} 
+                  className={`${index % 2 === 0 ? 'bg-gray-800/20' : 'bg-gray-800/10'} hover:bg-teal-500/5 transition-all duration-300`}
+                >
+                  <td className="px-6 py-4 whitespace-nowrap text-sm font-mono text-teal-400">
+                    {formatAddress(swap.txHash)}
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap text-sm font-mono text-gray-300">
+                    {formatAddress(swap.sender)}
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-300">
+                    {formatVolume(swap.amount0)}
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-300">
+                    {formatVolume(swap.amount1)}
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-300">
+                    {formatTimestamp(swap.timestamp)}
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-300">
+                    {parseInt(swap.gasUsed).toLocaleString()}
+                  </td>
                 </tr>
-              </thead>
-              <tbody className="bg-white divide-y divide-gray-200">
-                {swapsData.slice(0, 10).map((swap, index) => (
-                  <tr key={swap.id} className={index % 2 === 0 ? 'bg-white' : 'bg-gray-50'}>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm font-mono text-blue-600">
-                      {formatAddress(swap.txHash)}
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm font-mono text-gray-900">
-                      {formatAddress(swap.sender)}
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                      {formatVolume(swap.amount0)}
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                      {formatVolume(swap.amount1)}
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                      {formatTimestamp(swap.timestamp)}
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                      {parseInt(swap.gasUsed).toLocaleString()}
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
+              ))}
+            </tbody>
+          </table>
         </div>
       </div>
     </div>
-  );
+  </div>
+);
+  
 }
