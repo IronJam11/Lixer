@@ -93,26 +93,28 @@ export const PoolsOverview: React.FC<PoolsOverviewProps> = ({ data, limit = 10 }
     }
   };
 
+  const SortButton: React.FC<{ column: typeof sortBy; children: React.ReactNode }> = ({ column, children }) => (
+    <th className="text-left py-3 px-2">
+      <button
+        onClick={() => handleSort(column)}
+        className={`text-sm font-semibold transition-colors hover:text-blue-600 w-full text-left ${
+          sortBy === column ? 'text-blue-600' : 'text-gray-600'
+        }`}
+      >
+        <div className="flex items-center space-x-1">
+          <span>{children}</span>
+          {sortBy === column && (
+            <span className="text-xs">
+              {sortOrder === 'desc' ? '↓' : '↑'}
+            </span>
+          )}
+        </div>
+      </button>
+    </th>
+  );
+
   const poolsAnalytics = data.pools.map(getPoolAnalytics);
   const sortedPools = sortPools(poolsAnalytics).slice(0, limit);
-
-  const SortButton: React.FC<{ column: typeof sortBy; children: React.ReactNode }> = ({ column, children }) => (
-    <button
-      onClick={() => handleSort(column)}
-      className={`text-left py-3 px-2 text-sm font-semibold transition-colors hover:text-blue-600 ${
-        sortBy === column ? 'text-blue-600' : 'text-gray-600'
-      }`}
-    >
-      <div className="flex items-center space-x-1">
-        <span>{children}</span>
-        {sortBy === column && (
-          <span className="text-xs">
-            {sortOrder === 'desc' ? '↓' : '↑'}
-          </span>
-        )}
-      </div>
-    </button>
-  );
 
   return (
     <div className="bg-white rounded-xl shadow-lg p-6">
