@@ -3,8 +3,9 @@
 **Lixer** is a comprehensive SDK and analytics platform that provides real-time and historical swap data across all major DEXs supported by LiquidLabs. Built on top of Goldsky's infrastructure, Lixer delivers decoded swap events with sub-second latency, making it the ideal solution for analytics dashboards, MEV bots, yield optimizers, and DeFi applications.
 
 ## Architecture Overview
-
 Lixer is built as a multi-component system designed for scalability and real-time data processing:
+
+![Lixer Architecture](monorepo/public/images/Screenshot%20from%202025-08-24%2023-26-05.png)
 
 ### Data Indexing Layer
 - **Historical Data**: Utilizes Goldsky subgraphs to index historical swap events from multiple DEX protocols
@@ -39,7 +40,7 @@ const ws = await lixer.websocket().connect();
 - Hosted infrastructure - no server setup required
 
 #### 2. **API Server** (`/server`)
-A robust Express.js backend deployed on AWS EC2 that serves as the data access layer:
+A robust Express.js backend deployed on onrender that serves as the data access layer:
 
 **Key Services:**
 - **Swap Data Service**: Manages swap event retrieval and processing
