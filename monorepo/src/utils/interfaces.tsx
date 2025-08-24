@@ -115,3 +115,9 @@ export interface DashboardData {
   poolAnalytics: PoolAnalytics[];
   allSwaps: SwapData[];
 }
+
+interface TimeSeriesData {
+  time: number;
+  volume: string;
+}
+

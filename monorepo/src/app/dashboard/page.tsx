@@ -11,6 +11,9 @@ import { Pool, TimeseriesResponse, SwapData, SwapResponse, GlobalStats, ChartDat
 import { TimeRange, COLORS } from '@/utils/constants';
 import { EnhancedPoolAnalyticsTable } from './components/enhancedPoolAnalyticsTable';
 import { dashboardApi as api } from '@/api/dashboard';
+import { RecentSwaps } from './components/recentSwaps';
+import { PoolsOverview } from './components/poolsOverwiew';
+import { PoolActivity } from './components/poolActivityComponent';
 
 const DeFiAnalyticsDashboard: React.FC = () => {
   const [data, setData] = useState<DashboardData>({
@@ -260,7 +263,16 @@ const DeFiAnalyticsDashboard: React.FC = () => {
         {/* Pool Distribution Charts */}
         <PoolDistributionCharts data={data} />
         {/* Enhanced Pool Analytics Table */}
-        <EnhancedPoolAnalyticsTable data={data} />
+        {/* <EnhancedPoolAnalyticsTable data={data} /> */}
+        {/* Recent Swaps */}
+        <RecentSwaps data={data} />
+        {/* Pools Overview */}
+        <PoolsOverview data={data} />
+        {/* Pool Activity Component */}
+        <PoolActivity data={data} />
+
+
+
       </div>
     </div>
   );
