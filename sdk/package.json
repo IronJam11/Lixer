@@ -1,24 +1,52 @@
 {
-  "name": "lixer-api-server",
+  "name": "@lixersdk/sdk",
   "version": "1.0.0",
-  "main": "src/index.js",
+  "description": "Official Lixer SDK for accessing real-time and historical DeFi swap data across all major DEXs",
+  "main": "index.js",
+  "types": "index.d.ts",
+  "files": [
+    "index.js",
+    "index.d.ts", 
+    "services/",
+    "README.md"
+  ],
   "scripts": {
-    "start": "node src/index.js",
-    "dev": "nodemon src/index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": ["graphql", "subgraph", "api", "express"],
-  "author": "",
-  "license": "ISC",
-  "description": "REST API server for Lixer subgraph",
-  "dependencies": {
-    "express": "^4.18.2",
-    "cors": "^2.8.5",
-    "dotenv": "^16.3.1",
-    "axios": "^1.6.0",
-    "ethers": "^6.15.0"
+  "keywords": [
+    "defi", 
+    "dex", 
+    "swap", 
+    "blockchain", 
+    "ethereum", 
+    "uniswap", 
+    "sushiswap", 
+    "analytics", 
+    "real-time", 
+    "websocket",
+    "liquidlabs",
+    "goldsky"
+  ],
+  "author": "Lixer Team",
+  "license": "MIT",
+  "homepage": "https://github.com/Haxry/lixer#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Haxry/lixer.git",
+    "directory": "sdk"
   },
-  "devDependencies": {
-    "nodemon": "^3.0.1"
+  "bugs": {
+    "url": "https://github.com/Haxry/lixer/issues"
+  },
+  "dependencies": {
+    "axios": "^1.6.0",
+    "ws": "^8.14.0"
+  },
+  "peerDependencies": {
+    "node": ">=14.0.0"
+  },
+  "engines": {
+    "node": ">=14.0.0",
+    "npm": ">=6.0.0"
   }
 }
