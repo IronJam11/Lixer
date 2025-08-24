@@ -5,9 +5,9 @@ import { usePathname } from "next/navigation";
 
 // Define main nav items to match the Hyperliquid style
 const NAV_ITEMS = [
-  { title: "Stats", url: "/stats" },
+  
   { title: "Docs", url: "/docs" },
-  { title: "Ecosystem", url: "/ecosystem" }
+  { title: "Subscribe", url: "/subscribe" }
 ];
 
 export function Navbar() {
@@ -36,10 +36,10 @@ export function Navbar() {
         ))}
       </ul>
       <Link 
-        href="/app" 
+        href="/dashboard" 
         className="ml-10 rounded-full bg-[#c6f6de] px-8 py-2 text-base font-medium text-black hover:bg-[#b0edce] transition-colors"
       >
-        Launch App
+        Dashboard
       </Link>
     </nav>
   );
