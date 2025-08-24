@@ -17,7 +17,7 @@ Lixer is built as a multi-component system designed for scalability and real-tim
 A lightweight JavaScript/Node.js SDK available on npm that provides instant access to Lixer's data without any configuration:
 
 ```javascript
-const LixerSDK = require('@lixer/sdk');
+const LixerSDK = require('@lixersdk/sdk');
 const lixer = new LixerSDK();
 
 // Get swap data
@@ -56,7 +56,7 @@ A robust Express.js backend deployed on AWS EC2 that serves as the data access l
 - `WebSocket /ws` - Real-time event streaming
 
 **Infrastructure:**
-- Deployed on AWS EC2 for high availability
+- Deployed for high availability
 - Managed PostgreSQL database
 - Automated scaling and monitoring
 - 99.99% uptime SLA
@@ -119,10 +119,9 @@ Goldsky mirror pipeline configuration for real-time data ingestion:
 
 ## Supported Protocols
 
-Lixer currently supports swap data from all major DEXs integrated with LiquidLabs, including:
-- Uniswap V3 pools
-- SushiSwap
-- And 50+ other major DEX protocols
+Lixer currently supports swap data from all major DEXs integrated with LiquidLabs, such as:
+- Hyperswap V3 pools
+
 
 ## Technical Specifications
 
@@ -143,9 +142,8 @@ All swap events include standardized fields:
 ### Infrastructure
 - **Database**: Managed PostgreSQL with real-time triggers
 - **WebSocket**: Real-time event streaming
-- **API**: RESTful endpoints hosted on AWS EC2
+- **API**: RESTful endpoints hosted on onrender
 - **Monitoring**: Built-in health checks and error tracking
-- **CDN**: Global content delivery for optimal performance
 
 ## Getting Started
 
@@ -154,7 +152,7 @@ All swap events include standardized fields:
 Simply install the Lixer SDK from npm:
 
 ```bash
-npm install @lixer/sdk
+npm install @lixersdk/sdk
 ```
 
 That's it! No configuration required - the SDK connects to our hosted infrastructure automatically.
@@ -162,7 +160,7 @@ That's it! No configuration required - the SDK connects to our hosted infrastruc
 ### Quick Start Example
 
 ```javascript
-const LixerSDK = require('@lixer/sdk');
+const LixerSDK = require('@lixersdk/sdk');
 
 // Initialize SDK (no configuration needed)
 const lixer = new LixerSDK();
@@ -182,7 +180,7 @@ ws.on('message', (data) => {
 ### TypeScript Support
 
 ```typescript
-import LixerSDK from '@lixer/sdk';
+import LixerSDK from '@lixersdk/sdk';
 
 const lixer = new LixerSDK();
 
@@ -264,7 +262,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 For support and questions:
 - Create an issue on GitHub
-- Check our [npm package documentation](https://www.npmjs.com/package/@lixer/sdk)
+- Check our [npm package documentation](https://www.npmjs.com/package/@lixersdk/sdk)
 - Join our [Discord community](https://discord.gg/lixer)
 - Read the [Documentation](https://docs.lixer.io)
 
@@ -272,17 +270,7 @@ For support and questions:
 
 ### NPM Installation
 ```bash
-npm install @lixer/sdk
-```
-
-### Yarn Installation
-```bash
-yarn add @lixer/sdk
-```
-
-### CDN Usage
-```html
-<script src="https://unpkg.com/@lixer/sdk@latest/dist/lixer.min.js"></script>
+npm install @lixersdk/sdk
 ```
 
 ## Roadmap
@@ -299,4 +287,4 @@ yarn add @lixer/sdk
 
 ---
 
-**Lixer** - Powering the next generation of DeFi applications with real-time, reliable swap data. Simply `npm install @lixer/sdk` and start building.
+**Lixer** - Powering the next generation of DeFi applications with real-time, reliable swap data. Simply `npm install @lixersdk/sdk` and start building.
