@@ -39,7 +39,7 @@ const DeFiAnalyticsDashboard: React.FC = () => {
     allSwaps: []
   });
   
-  const [timeRange, setTimeRange] = useState<TimeRange>('24h');
+  const [timeRange, setTimeRange] = useState<TimeRange>('7d');
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
   const [refreshing, setRefreshing] = useState<boolean>(false);
@@ -176,6 +176,7 @@ const DeFiAnalyticsDashboard: React.FC = () => {
   const fetchData = useCallback(async (): Promise<void> => {
     try {
       setError(null);
+      setLoading(true);
       
       const { interval, limit } = getTimeRangeParams(timeRange);
       
@@ -185,9 +186,9 @@ const DeFiAnalyticsDashboard: React.FC = () => {
         api.getSwaps(undefined, 500) 
       ]);
       
-      const pools: Pool[] = poolsRes.status === 'fulfilled' ? poolsRes.value.data : [];
+      const pools: Pool[] = poolsRes.status === 'fulfilled' ? poolsRes.value : [];
       const timeseriesData: TimeseriesResponse = timeseriesRes.status === 'fulfilled' 
-        ? timeseriesRes.value.data 
+        ? timeseriesRes.value.data
         : { interval: 'hour', data: [] };
       const allSwaps: SwapData[] = swapsRes.status === 'fulfilled' ? swapsRes.value.data.data : [];
       
@@ -218,7 +219,9 @@ const DeFiAnalyticsDashboard: React.FC = () => {
 
   const handleRefresh = (): void => {
     setRefreshing(true);
+    setLoading(true);
     fetchData();
+    setLoading(false);
   };
 
 
@@ -276,27 +279,9 @@ const DeFiAnalyticsDashboard: React.FC = () => {
       {/* Enhanced Key Metrics */}
       <div className="mb-16">
         <KeyMetrics data={data} />
-      </div>
-
-      {/* Enhanced Charts Grid */}
-      <div className="mb-16">
-        <div className="text-center mb-12">
-          <h2 className="text-4xl md:text-5xl font-light text-gray-300 mb-4">
-            Market <span className="text-white">Analytics</span>
-          </h2>
-          <p className="text-gray-500">Comprehensive trading data visualization</p>
-        </div>
+        {/* Enhanced Charts Grid */}
         <EnhancedChartsGrid data={data} />
-      </div>
-
-      {/* Pool Distribution Charts */}
-      <div className="mb-16">
-        <div className="text-center mb-12">
-          <h2 className="text-4xl md:text-5xl font-light text-gray-300 mb-4">
-            Pool <span className="text-teal-300">Distribution</span>
-          </h2>
-          <p className="text-gray-500">Liquidity pool performance and allocation</p>
-        </div>
+        {/* Pool Distribution Charts */}
         <PoolDistributionCharts data={data} />
       </div>
 

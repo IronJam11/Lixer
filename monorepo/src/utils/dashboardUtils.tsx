@@ -46,6 +46,7 @@ export const formatGwei = (value: number): string => {
   };
 
 export const getTokenSymbol = (tokenId: string): string => {
+   
     return `${tokenId.slice(0, 6)}...${tokenId.slice(-4)}`;
   };
 

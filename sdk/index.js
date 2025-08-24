@@ -2,9 +2,11 @@ const axios = require('axios');
 
 class LixerSDK {
   constructor(baseURL) {
+    const defaultURL = 'https://lixer.onrender.com/';
+    
     this.client = axios.create({
-      baseURL: baseURL || process.env.SDK_PRODUCTION_URL,
-      headers: { 'Content-Type': 'application/json' }
+      baseURL: baseURL || process.env.LIXER_API_URL || defaultURL,
+      headers: { 'Content-Type': 'application/json' },
     });
   }
 
