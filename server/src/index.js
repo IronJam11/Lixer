@@ -44,7 +44,9 @@ app.get('/', (req, res) => {
   // Determine WebSocket URL based on environment
   const protocol = req.secure || req.headers['x-forwarded-proto'] === 'https' ? 'wss' : 'ws';
   const host = req.get('host');
-  const wsUrl = `${protocol}://${host}/ws`;
+  const wsUrl = host
+    ? `${protocol}://${host}/ws`
+    : `ws://localhost:${WS_PORT}`;
 
   res.json({
     message: 'Lixer API Server',
@@ -71,8 +73,8 @@ app.use((req, res) => {
   res.status(404).json({ error: 'Not Found' });
 });
 
-wsServer.start(server).then(() => {
-  console.log(`WebSocket server integrated with HTTP server`);
+wsServer.start(WS_PORT).then(() => {
+  console.log(`WebSocket server started on port ${WS_PORT}`);
 }).catch(error => {
   console.error('Failed to start WebSocket server:', error);
 });
@@ -102,7 +104,7 @@ initServices();
 
 server.listen(PORT, () => {
   console.log(`Lixer API Server running on port ${PORT}`);
-  console.log(`WebSocket server available at /ws`);
+  console.log(`WebSocket server running on port ${WS_PORT}`);
   console.log(`Subgraph URL: ${process.env.SUBGRAPH_URL}`);
 });
 

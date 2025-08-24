@@ -12,13 +12,13 @@ class SwapWebSocketServer {
     this.broadcastInterval = null;
   }
 
-  async start(server) {
-    // If server is passed, attach to existing HTTP server, otherwise use port
-    if (server) {
-      this.wss = new WebSocket.Server({ server, path: '/ws' });
+  async start(serverOrPort) {
+    // If HTTP server object is passed, attach to it, otherwise use port
+    if (serverOrPort && typeof serverOrPort === 'object' && serverOrPort.on) {
+      this.wss = new WebSocket.Server({ server: serverOrPort, path: '/ws' });
       console.log(`WebSocket server attached to HTTP server at /ws`);
     } else {
-      const port = typeof server === 'number' ? server : 8080;
+      const port = typeof serverOrPort === 'number' ? serverOrPort : 8080;
       this.wss = new WebSocket.Server({ port });
       console.log(`WebSocket server started on port ${port}`);
     }
@@ -104,7 +104,7 @@ class SwapWebSocketServer {
         data: swapResult.recentSwaps
       };
       
-      // Broadcasting to WebSocket clients
+      console.log(`Broadcasting INSTANT update to ${this.clients.size} clients - Block ${newSwapData.block_number}`);
       
       this.clients.forEach((ws) => {
         if (ws.readyState === WebSocket.OPEN) {
@@ -155,6 +155,8 @@ class SwapWebSocketServer {
         source: swapData.source,
         data: swapData.data
       };
+      
+      console.log(`Broadcasting to ${this.clients.size} clients - ${swapData.count} swaps`);
       
       this.clients.forEach((ws) => {
         if (ws.readyState === WebSocket.OPEN) {
