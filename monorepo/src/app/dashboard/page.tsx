@@ -1,6 +1,8 @@
 'use client';
 
 import React, { useState, useEffect, useCallback } from 'react';
+import Image from 'next/image';
+import lixerLogo from '@/assets/logos/Lixer.png';
 import { Header}from './components/header';
 import { TimeRangeSelection } from './components/timepageSelection';
 import { safeParseFloat, safeParseInt, getTokenSymbol, getTimeRangeParams } from '@/utils/dashboardUtils';
@@ -222,10 +224,10 @@ const DeFiAnalyticsDashboard: React.FC = () => {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-        <div className="text-center">
-          <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-blue-600"></div>
-          <p className="mt-4 text-gray-600">Loading analytics...</p>
+      <div className="min-h-screen bg-gradient-to-br from-black via-gray-900 to-teal-900 flex items-center justify-center">
+        <div className="flex flex-col items-center">
+          <Image src={lixerLogo} width={96} height={96} alt="Lixer logo" className="animate-bounce mb-6" />
+          <div className="text-gray-300 text-xl font-light">Loading analytics...</div>
         </div>
       </div>
     );
@@ -240,7 +242,7 @@ const DeFiAnalyticsDashboard: React.FC = () => {
           <p className="text-gray-600 mb-4">{error}</p>
           <button
             onClick={fetchData}
-            className="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition-colors"
+            className="bg-teal-300 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition-colors"
           >
             Try Again
           </button>
@@ -250,32 +252,111 @@ const DeFiAnalyticsDashboard: React.FC = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 p-4">
-      <div className="max-w-7xl mx-auto">
-        {/* Header */}
-        <Header handleRefresh={handleRefresh} refreshing={refreshing} data={data} />
-        {/* Time Range Selection */}
-        <TimeRangeSelection setTimeRange={setTimeRange} timeRange={timeRange} />
-        {/* Enhanced Key Metrics */}
-        <KeyMetrics data={data} />
-        {/* Enhanced Charts Grid */}
-        <EnhancedChartsGrid data={data} />
-        {/* Pool Distribution Charts */}
-        <PoolDistributionCharts data={data} />
-        {/* Enhanced Pool Analytics Table */}
-        {/* <EnhancedPoolAnalyticsTable data={data} /> */}
-        {/* Recent Swaps */}
-        <RecentSwaps data={data} />
-        {/* Pools Overview */}
-        <PoolsOverview data={data} />
-        {/* Pool Activity Component */}
-        <PoolActivity data={data} />
-
-
-
+  <div className="min-h-screen bg-black text-white">
+    <div className="max-w-7xl mx-auto px-6 py-8">
+      
+      {/* Hero Section */}
+      <div className="text-center mb-16">
+        <h1 className="text-5xl md:text-6xl lg:text-7xl font-light leading-tight text-gray-300 mb-4">
+          DEX <span className="text-teal-300">Analytics</span>
+        </h1>
+        <p className="text-gray-400 text-lg mb-8">Real-time insights into decentralized exchange activity</p>
       </div>
+
+      {/* Header */}
+      <div className="mb-8">
+        <Header handleRefresh={handleRefresh} refreshing={refreshing} data={data} />
+      </div>
+
+      {/* Time Range Selection */}
+      <div className="mb-12">
+        <TimeRangeSelection setTimeRange={setTimeRange} timeRange={timeRange} />
+      </div>
+
+      {/* Enhanced Key Metrics */}
+      <div className="mb-16">
+        <KeyMetrics data={data} />
+      </div>
+
+      {/* Enhanced Charts Grid */}
+      <div className="mb-16">
+        <div className="text-center mb-12">
+          <h2 className="text-4xl md:text-5xl font-light text-gray-300 mb-4">
+            Market <span className="text-white">Analytics</span>
+          </h2>
+          <p className="text-gray-500">Comprehensive trading data visualization</p>
+        </div>
+        <EnhancedChartsGrid data={data} />
+      </div>
+
+      {/* Pool Distribution Charts */}
+      <div className="mb-16">
+        <div className="text-center mb-12">
+          <h2 className="text-4xl md:text-5xl font-light text-gray-300 mb-4">
+            Pool <span className="text-teal-300">Distribution</span>
+          </h2>
+          <p className="text-gray-500">Liquidity pool performance and allocation</p>
+        </div>
+        <PoolDistributionCharts data={data} />
+      </div>
+
+      {/* Enhanced Pool Analytics Table */}
+      {/* <div className="mb-16">
+        <div className="text-center mb-12">
+          <h2 className="text-4xl md:text-5xl font-light text-gray-300 mb-4">
+            Pool <span className="text-white">Analytics</span>
+          </h2>
+          <p className="text-gray-500">Detailed pool performance metrics</p>
+        </div>
+        <EnhancedPoolAnalyticsTable data={data} />
+      </div> */}
+
+      {/* Recent Activity Section */}
+      <div className="mb-16">
+        <div className="text-center mb-12">
+          <h2 className="text-4xl md:text-5xl font-light text-gray-300 mb-4">
+            Recent <span className="text-teal-300">Activity</span>
+          </h2>
+          <p className="text-gray-500">Latest transactions and swap events</p>
+        </div>
+        <RecentSwaps data={data} />
+      </div>
+
+      {/* Pools Overview */}
+      <div className="mb-16">
+        <div className="text-center mb-12">
+          <h2 className="text-4xl md:text-5xl font-light text-gray-300 mb-4">
+            Pools <span className="text-white">Overview</span>
+          </h2>
+          <p className="text-gray-500">Complete pool ecosystem analysis</p>
+        </div>
+        <PoolsOverview data={data} />
+      </div>
+
+      {/* Pool Activity Component */}
+      <div className="mb-16">
+        <div className="text-center mb-12">
+          <h2 className="text-4xl md:text-5xl font-light text-gray-300 mb-4">
+            Pool <span className="text-teal-300">Activity</span>
+          </h2>
+          <p className="text-gray-500">Live pool interactions and trends</p>
+        </div>
+        <PoolActivity data={data} />
+      </div>
+
+      {/* Footer */}
+      <div className="text-center py-12 border-t border-gray-800">
+        <p className="text-gray-500 text-sm mb-4">
+          Built on <span className="text-white">Hyperliquid</span>
+        </p>
+        <p className="text-gray-500 text-xs">
+          Powered by <span className="text-teal-300">Liquid Labs and Goldsky</span>
+        </p>
+      </div>
+
     </div>
-  );
+  </div>
+);
 };
 
 export default DeFiAnalyticsDashboard;
