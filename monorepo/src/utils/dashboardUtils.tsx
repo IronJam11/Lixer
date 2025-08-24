@@ -1,4 +1,5 @@
 import React from "react";
+import { TimeRange } from "./constants";
 
 export  const formatCurrency = (value: number): string => {
     if (!value || isNaN(value)) return '$0';
@@ -42,4 +43,34 @@ export const formatTime = (timestamp: number): string => {
   };
 export const formatGwei = (value: number): string => {
     return `${value.toFixed(2)} Gwei`;
+  };
+
+export const getTokenSymbol = (tokenId: string): string => {
+    return `${tokenId.slice(0, 6)}...${tokenId.slice(-4)}`;
+  };
+
+export   const safeParseFloat = (value: string | number | undefined): number => {
+    if (value === undefined || value === null) return 0;
+    const parsed = typeof value === 'string' ? parseFloat(value) : value;
+    return isNaN(parsed) ? 0 : parsed;
+  };
+
+export   const safeParseInt = (value: string | number | undefined): number => {
+    if (value === undefined || value === null) return 0;
+    const parsed = typeof value === 'string' ? parseInt(value, 10) : value;
+    return isNaN(parsed) ? 0 : parsed;
+  };
+export const getTimeRangeParams = (timeRange: TimeRange) => {
+    switch (timeRange) {
+      case '1h':
+        return { interval: 'minute', limit: 60 };
+      case '24h':
+        return { interval: 'hour', limit: 24 };
+      case '7d':
+        return { interval: 'hour', limit: 168 }; // 24 * 7
+      case '30d':
+        return { interval: 'day', limit: 30 };
+      default:
+        return { interval: 'hour', limit: 24 };
+    }
   };

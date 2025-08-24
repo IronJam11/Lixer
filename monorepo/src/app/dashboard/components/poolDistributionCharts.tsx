@@ -2,8 +2,9 @@ import React from "react";
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, BarChart, Bar, PieChart, Pie, Cell, ScatterChart, Scatter, AreaChart, Area, ComposedChart } from 'recharts';
 import { TrendingUp, TrendingDown, Activity, DollarSign, BarChart3, Timer, ArrowUpDown, Users, Volume2, Calendar, RefreshCw, Zap } from 'lucide-react';
 import { formatCurrency } from "@/utils/dashboardUtils";
+import { COLORS } from "@/utils/constants";
 
-export const poolDistributionCharts: React.FC<{ data: any }> = ({ data }) => {
+export const PoolDistributionCharts: React.FC<{ data: any }> = ({ data }) => {
   return (
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 mb-6">
               {/* Volume Distribution Pie Chart */}
@@ -13,7 +14,7 @@ export const poolDistributionCharts: React.FC<{ data: any }> = ({ data }) => {
                   <ResponsiveContainer width="100%" height="100%">
                     <PieChart>
                       <Pie
-                        data={data.poolAnalytics.slice(0, 8).map((pool, index) => ({
+                        data={data.poolAnalytics.slice(0, 8).map((pool: { pairName: any; volume24h: any; }, index: number) => ({
                           name: pool.pairName,
                           value: pool.volume24h,
                           fill: COLORS[index]

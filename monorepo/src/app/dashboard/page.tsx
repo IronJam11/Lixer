@@ -6,17 +6,17 @@ import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, Responsi
 import { TrendingUp, TrendingDown, Activity, DollarSign, BarChart3, Timer, ArrowUpDown, Users, Volume2, Calendar, RefreshCw, Zap } from 'lucide-react';
 import { Header}from './components/header';
 import { TimeRangeSelection } from './components/timepageSelection';
-import { formatCurrency, formatGwei, formatNumber, formatTime } from '@/utils/dashboardUtils';
+import { formatCurrency, formatGwei, formatNumber, formatTime, safeParseFloat, safeParseInt, getTokenSymbol, getTimeRangeParams } from '@/utils/dashboardUtils';
 import { KeyMetrics } from './components/keyMetreics';
 import { EnhancedChartsGrid } from './components/enhancedChartsGrid';
+import { PoolDistributionCharts } from './components/poolDistributionCharts';
 
-const API_BASE_URL = 'http://localhost:3000';
+const API_BASE_URL = env.API_BASE_URL || 'http://localhost:3000';
 
 import { Pool, TimeseriesResponse, SwapData, SwapResponse, GlobalStats, ChartDataPoint, PoolAnalytics, DashboardData } from '@/utils/interfaces';
-
-type TimeRange = '1h' | '24h' | '7d' | '30d';
-
-const COLORS = ['#2563eb', '#7c3aed', '#059669', '#dc2626', '#ea580c', '#0891b2', '#be123c', '#4338ca'];
+import { TimeRange, COLORS } from '@/utils/constants';
+import { EnhancedPoolAnalyticsTable } from './components/enhancedPoolAnalyticsTable';
+import { env } from 'process';
 
 const api = {
   getPools: (): Promise<AxiosResponse<Pool[]>> => 
@@ -60,36 +60,6 @@ const DeFiAnalyticsDashboard: React.FC = () => {
   const [error, setError] = useState<string | null>(null);
   const [refreshing, setRefreshing] = useState<boolean>(false);
 
-  const getTokenSymbol = (tokenId: string): string => {
-    return `${tokenId.slice(0, 6)}...${tokenId.slice(-4)}`;
-  };
-
-  const safeParseFloat = (value: string | number | undefined): number => {
-    if (value === undefined || value === null) return 0;
-    const parsed = typeof value === 'string' ? parseFloat(value) : value;
-    return isNaN(parsed) ? 0 : parsed;
-  };
-
-  const safeParseInt = (value: string | number | undefined): number => {
-    if (value === undefined || value === null) return 0;
-    const parsed = typeof value === 'string' ? parseInt(value, 10) : value;
-    return isNaN(parsed) ? 0 : parsed;
-  };
-
-  const getTimeRangeParams = (timeRange: TimeRange) => {
-    switch (timeRange) {
-      case '1h':
-        return { interval: 'minute', limit: 60 };
-      case '24h':
-        return { interval: 'hour', limit: 24 };
-      case '7d':
-        return { interval: 'hour', limit: 168 }; // 24 * 7
-      case '30d':
-        return { interval: 'day', limit: 30 };
-      default:
-        return { interval: 'hour', limit: 24 };
-    }
-  };
 
   const calculateSwapAnalytics = (swaps: SwapData[]) => {
     const uniqueUsers = new Set(swaps.map(swap => swap.sender)).size;
@@ -190,9 +160,9 @@ const DeFiAnalyticsDashboard: React.FC = () => {
 
   const processTimeseriesData = (timeseriesResponse: TimeseriesResponse, pools: Pool[], swaps: SwapData[]): ChartDataPoint[] => {
     return timeseriesResponse.data.map(item => {
-      const volume = safeParseFloat(item.volume) / 1e18; // Convert from wei
+      const volume = safeParseFloat(item.volume) / 1e18; 
       const timeSwaps = swaps.filter(swap => 
-        Math.abs(swap.timestamp - item.time) < 3600 // Within 1 hour
+        Math.abs(swap.timestamp - item.time) < 3600 
       );
       
       const gasUsed = timeSwaps.length > 0 
@@ -200,16 +170,16 @@ const DeFiAnalyticsDashboard: React.FC = () => {
         : 0;
       
       const gasPrice = timeSwaps.length > 0
-        ? timeSwaps.reduce((sum, swap) => sum + safeParseInt(swap.gasPrice), 0) / timeSwaps.length / 1e9 // Convert to Gwei
+        ? timeSwaps.reduce((sum, swap) => sum + safeParseInt(swap.gasPrice), 0) / timeSwaps.length / 1e9 
         : 0;
 
       return {
         time: item.time,
         volume,
         swaps: timeSwaps.length,
-        fees: volume * 0.003, // Assuming 0.3% average fee
+        fees: volume * 0.003, 
         tvl: pools.reduce((sum, pool) => sum + safeParseFloat(pool.liquidity) / 1e18, 0),
-        token0Volume: volume * 0.5, // Approximate split
+        token0Volume: volume * 0.5, 
         token1Volume: volume * 0.5,
         avgSwapSize: timeSwaps.length > 0 ? volume / timeSwaps.length : 0,
         poolCount: pools.length,
@@ -228,7 +198,7 @@ const DeFiAnalyticsDashboard: React.FC = () => {
       const [poolsRes, timeseriesRes, swapsRes] = await Promise.allSettled([
         api.getPools(),
         api.getTimeseries(interval, limit),
-        api.getSwaps(undefined, 500) // Get recent swaps across all pools
+        api.getSwaps(undefined, 500) 
       ]);
       
       const pools: Pool[] = poolsRes.status === 'fulfilled' ? poolsRes.value.data : [];
@@ -302,141 +272,16 @@ const DeFiAnalyticsDashboard: React.FC = () => {
       <div className="max-w-7xl mx-auto">
         {/* Header */}
         <Header handleRefresh={handleRefresh} refreshing={refreshing} data={data} />
+        {/* Time Range Selection */}
         <TimeRangeSelection setTimeRange={setTimeRange} timeRange={timeRange} />
-
         {/* Enhanced Key Metrics */}
         <KeyMetrics data={data} />
-
         {/* Enhanced Charts Grid */}
         <EnhancedChartsGrid data={data} />
-
         {/* Pool Distribution Charts */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 mb-6">
-          {/* Volume Distribution Pie Chart */}
-          <div className="bg-white p-4 rounded shadow">
-            <h3 className="text-lg font-semibold mb-2">Volume Distribution (Top 8)</h3>
-            <div className="h-[200px]">
-              <ResponsiveContainer width="100%" height="100%">
-                <PieChart>
-                  <Pie
-                    data={data.poolAnalytics.slice(0, 8).map((pool, index) => ({
-                      name: pool.pairName,
-                      value: pool.volume24h,
-                      fill: COLORS[index]
-                    }))}
-                    cx="50%"
-                    cy="50%"
-                    innerRadius={40}
-                    outerRadius={80}
-                    dataKey="value"
-                  />
-                  <Tooltip formatter={(value) => formatCurrency(value as number)} />
-                </PieChart>
-              </ResponsiveContainer>
-            </div>
-          </div>
-
-          {/* Unique Traders Distribution */}
-          <div className="bg-white p-4 rounded shadow">
-            <h3 className="text-lg font-semibold mb-2">Unique Traders per Pool</h3>
-            <div className="h-[200px]">
-              <ResponsiveContainer width="100%" height="100%">
-                <BarChart data={data.poolAnalytics.slice(0, 8)}>
-                  <CartesianGrid strokeDasharray="3 3" />
-                  <XAxis dataKey="pairName" tick={{ fontSize: 10 }} />
-                  <YAxis />
-                  <Tooltip />
-                  <Bar dataKey="uniqueTraders" fill="#7c3aed" />
-                </BarChart>
-              </ResponsiveContainer>
-            </div>
-          </div>
-          <div className="bg-white p-4 rounded shadow">
-            <h3 className="text-lg font-semibold mb-2">Avg Gas Usage by Pool</h3>
-            <div className="h-[200px]">
-              <ResponsiveContainer width="100%" height="100%">
-                <BarChart data={data.poolAnalytics.slice(0, 8)}>
-                  <CartesianGrid strokeDasharray="3 3" />
-                  <XAxis dataKey="pairName" tick={{ fontSize: 10 }} />
-                  <YAxis />
-                  <Tooltip />
-                  <Bar dataKey="avgGasUsed" fill="#059669" />
-                </BarChart>
-              </ResponsiveContainer>
-            </div>
-          </div>
-        </div>
-
-        <div className="bg-white rounded shadow p-4 mb-6">
-          <h3 className="text-lg font-semibold mb-4">Recent Swaps</h3>
-          <div className="overflow-x-auto">
-            <table className="min-w-full text-sm">
-              <thead>
-                <tr className="border-b">
-                  <th className="text-left py-2 px-2">Pool</th>
-                  <th className="text-left py-2 px-2">Trader</th>
-                  <th className="text-right py-2 px-2">Amount 0</th>
-                  <th className="text-right py-2 px-2">Amount 1</th>
-                  <th className="text-right py-2 px-2">Gas Used</th>
-                  <th className="text-right py-2 px-2">Gas Price</th>
-                  <th className="text-right py-2 px-2">Time</th>
-                </tr>
-              </thead>
-              <tbody>
-                {data.allSwaps.slice(0, 10).map((swap) => (
-                  <tr key={swap.id} className="border-b border-gray-100">
-                    <td className="py-2 px-2 font-mono text-xs">{swap.poolAddress.slice(0, 8)}...</td>
-                    <td className="py-2 px-2 font-mono text-xs">{swap.sender.slice(0, 8)}...</td>
-                    <td className="text-right py-2 px-2">{(safeParseFloat(swap.amount0) / 1e18).toFixed(4)}</td>
-                    <td className="text-right py-2 px-2">{(safeParseFloat(swap.amount1) / 1e18).toFixed(4)}</td>
-                    <td className="text-right py-2 px-2">{formatNumber(safeParseInt(swap.gasUsed))}</td>
-                    <td className="text-right py-2 px-2">{formatGwei(safeParseFloat(swap.gasPrice) / 1e9)}</td>
-                    <td className="text-right py-2 px-2">{formatTime(swap.timestamp)}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        </div>
-
+        <PoolDistributionCharts data={data} />
         {/* Enhanced Pool Analytics Table */}
-        <div className="bg-white rounded shadow p-4">
-          <h3 className="text-lg font-semibold mb-4">Detailed Pool Analytics</h3>
-          <div className="overflow-x-auto">
-            <table className="min-w-full text-sm">
-              <thead>
-                <tr className="border-b">
-                  <th className="text-left py-2 px-2">Pool</th>
-                  <th className="text-right py-2 px-2">Volume 24h</th>
-                  <th className="text-right py-2 px-2">TVL</th>
-                  <th className="text-right py-2 px-2">Fees 24h</th>
-                  <th className="text-right py-2 px-2">Swaps</th>
-                  <th className="text-right py-2 px-2">Fee %</th>
-                  <th className="text-right py-2 px-2">Avg Swap</th>
-                  <th className="text-right py-2 px-2">Unique Traders</th>
-                  <th className="text-right py-2 px-2">Avg Gas</th>
-                  <th className="text-right py-2 px-2">Utilization</th>
-                </tr>
-              </thead>
-              <tbody>
-                {data.poolAnalytics.slice(0, 20).map((pool) => (
-                  <tr key={pool.address} className="border-b border-gray-100">
-                    <td className="py-2 px-2 font-medium">{pool.pairName}</td>
-                    <td className="text-right py-2 px-2">{formatCurrency(pool.volume24h)}</td>
-                    <td className="text-right py-2 px-2">{formatCurrency(pool.tvl)}</td>
-                    <td className="text-right py-2 px-2">{formatCurrency(pool.fees24h)}</td>
-                    <td className="text-right py-2 px-2">{formatNumber(pool.swapCount)}</td>
-                    <td className="text-right py-2 px-2">{pool.fee.toFixed(3)}%</td>
-                    <td className="text-right py-2 px-2">{formatCurrency(pool.avgSwapSize)}</td>
-                    <td className="text-right py-2 px-2">{pool.uniqueTraders || 0}</td>
-                    <td className="text-right py-2 px-2">{formatNumber(pool.avgGasUsed || 0)}</td>
-                    <td className="text-right py-2 px-2">{(pool.liquidityUtilization * 100).toFixed(2)}%</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        </div>
+        <EnhancedPoolAnalyticsTable data={data} />
       </div>
     </div>
   );
