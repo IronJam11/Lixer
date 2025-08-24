@@ -1,0 +1,36 @@
+# Development files
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Testing
+coverage/
+*.test.js
+test/
+tests/
+
+# Development tools
+.nyc_output
+.eslintrc*
+.prettierrc*
+jest.config.*
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Git
+.git/
+.gitignore
+
+# Other
+*.log
+.env*
+!.env.example
