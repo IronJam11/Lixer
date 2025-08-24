@@ -8,7 +8,7 @@ import lixerLogo from '@/assets/logos/Lixer.png';
 
 export default function Home() {
   const [scrollY, setScrollY] = useState(0);
-  type WindowName = 'analytics' | 'metrics' | 'linear' | 'docs' | 'alerts' | null;
+  type WindowName = 'analytics' | 'Pools' | 'Stats' | 'WebSocket' | 'infos' | null;
   const [activeWindow, setActiveWindow] = useState<WindowName>(null);
 
   useEffect(() => {
@@ -24,13 +24,13 @@ export default function Home() {
       if (scrollPercentage < 0.17) {
         setActiveWindow(null);
       } else if (scrollPercentage < 0.5) {
-        setActiveWindow('metrics');
+        setActiveWindow('Pools');
       } else if (scrollPercentage < 0.8) {
-        setActiveWindow('linear');
+        setActiveWindow('Stats');
       } else if (scrollPercentage < 0.9) {
-        setActiveWindow('docs');
+        setActiveWindow('WebSocket');
       } else {
-        setActiveWindow('alerts');
+        setActiveWindow('infos');
       }
     };
     
@@ -213,13 +213,13 @@ export default function Home() {
           
           <div className="flex flex-col sm:flex-row gap-6 justify-center">
             <Link 
-              href="/docs"
+              href="/WebSocket"
               className="px-8 py-4 bg-white text-black font-medium rounded hover:bg-gray-100 transition-colors text-lg"
             >
               Get API Access
             </Link>
             <Link 
-              href="/docs"
+              href="/WebSocket"
               className="px-8 py-4 border border-gray-600 text-white font-medium rounded hover:border-gray-400 transition-colors text-lg"
             >
               Documentation
@@ -252,7 +252,7 @@ export default function Home() {
       {/* Fixed Bottom Navbar - macOS Dock Style */}
       <nav className="fixed bottom-4 left-1/2 transform -translate-x-1/2 z-50">
         {/* Dynamic Terminal Windows - Show when scrolling */}
-        {activeWindow === 'metrics' && (
+        {activeWindow === 'Pools' && (
           <div className="absolute bottom-32 left-1/2 transform -translate-x-1/2 mb-4 animate-in slide-in-from-bottom-2 duration-300">
             <div className="bg-gray-900/95 backdrop-blur-md rounded-lg border border-gray-600 w-80 h-48 overflow-hidden">
               <div className="flex items-center justify-between px-3 py-2 bg-gray-800 border-b border-gray-700">
@@ -261,21 +261,19 @@ export default function Home() {
                   <div className="w-2 h-2 bg-yellow-500 rounded-full"></div>
                   <div className="w-2 h-2 bg-green-500 rounded-full"></div>
                 </div>
-                <span className="text-white text-xs">Metrics</span>
+                <span className="text-white text-xs">Pools</span>
                 <div className="w-8"></div>
               </div>
               <div className="p-3 text-xs font-mono text-white">
-                <div className="mb-2 text-yellow-400">Service Impact ⚠️</div>
-                <div>timezone-api: <span className="text-red-400">5032ms</span></div>
-                <div>database: <span className="text-red-400">4200ms</span></div>
-                <div>tcp.connect: <span className="text-red-400">5000ms</span></div>
-                <div className="mt-2 text-green-400">✅ Build completed</div>
+                <div><span className="text-purple-400">const</span> <span className="text-blue-300">pools</span> = <span className="text-purple-400">await</span> <span className="text-blue-300">sdk.pools()</span>.<span className="text-blue-300">getAll</span>();</div>
+                <div><span className="text-purple-400">const</span> <span className="text-blue-300">poolSwaps</span> = <span className="text-purple-400">await</span> <span className="text-blue-300">sdk.pools()</span>.<span className="text-blue-300">getSwaps</span>(<span className="text-green-300">'poolAddress'</span>, <span className="text-white">{'{'}</span><span className="text-orange-300"> limit: 10 </span><span className="text-white">{'}'}</span>);</div>
+                <div><span className="text-purple-400">const</span> <span className="text-blue-300">timeseries</span> = <span className="text-purple-400">await</span> <span className="text-blue-300">sdk.pools()</span>.<span className="text-blue-300">getTimeSeries</span>(<span className="text-green-300">'poolAddress'</span>, <span className="text-white">{'{'}</span> interval: <span className="text-green-300">'hour'</span>, limit: <span className="text-orange-300">24</span> <span className="text-white">{'}'}</span>);</div>
               </div>
             </div>
           </div>
         )}
 
-        {activeWindow === 'linear' && (
+        {activeWindow === 'Stats' && (
           <div className="absolute bottom-32 left-1/2 transform -translate-x-1/2 mb-4 animate-in slide-in-from-bottom-2 duration-300">
             <div className="bg-gray-900/95 backdrop-blur-md rounded-lg border border-gray-600 w-80 h-48 overflow-hidden">
               <div className="flex items-center justify-between px-3 py-2 bg-gray-800 border-b border-gray-700">
@@ -284,20 +282,18 @@ export default function Home() {
                   <div className="w-2 h-2 bg-yellow-500 rounded-full"></div>
                   <div className="w-2 h-2 bg-green-500 rounded-full"></div>
                 </div>
-                <span className="text-white text-xs">Linear</span>
+                <span className="text-white text-xs">Stats</span>
                 <div className="w-8"></div>
               </div>
               <div className="p-3 text-xs font-mono text-white">
-                <div className="text-gray-400">Engineering • ENG-1335</div>
-                <div className="mt-2 font-semibold">Login returns 500 -- user blocked</div>
-                <div className="mt-2 text-gray-300">After deploying v2.6.1 (localized time formatting), users are encountering 500 errors on most pages, including login.</div>
-                <div className="mt-2 text-gray-400">nick created the issue • just now</div>
+                <div><span className="text-purple-400">const</span> <span className="text-blue-300">globalStats</span> = <span className="text-purple-400">await</span> <span className="text-blue-300">sdk.stats()</span>.<span className="text-blue-300">getGlobal</span>();</div>
+                <div><span className="text-purple-400">const</span> <span className="text-blue-300">poolStats</span> = <span className="text-purple-400">await</span> <span className="text-blue-300">sdk.stats()</span>.<span className="text-blue-300">getPool</span>(<span className="text-green-300">'poolAddress'</span>);</div>
               </div>
             </div>
           </div>
         )}
 
-        {activeWindow === 'docs' && (
+        {activeWindow === 'WebSocket' && (
           <div className="absolute bottom-32 left-1/2 transform -translate-x-1/2 mb-4 animate-in slide-in-from-bottom-2 duration-300">
             <div className="bg-gray-900/95 backdrop-blur-md rounded-lg border border-gray-600 w-80 h-48 overflow-hidden">
               <div className="flex items-center justify-between px-3 py-2 bg-gray-800 border-b border-gray-700">
@@ -306,47 +302,45 @@ export default function Home() {
                   <div className="w-2 h-2 bg-yellow-500 rounded-full"></div>
                   <div className="w-2 h-2 bg-green-500 rounded-full"></div>
                 </div>
-                <span className="text-white text-xs">Google Docs</span>
+                <span className="text-white text-xs">WebSocket (Live Data) </span>
                 <div className="w-8"></div>
               </div>
-              <div className="p-3 text-xs text-white">
-                <div className="font-semibold mb-2">API Timeout Handling - Runbook</div>
-                <div className="text-gray-400 text-xs">Last updated: 11 months ago</div>
-                <div className="text-gray-400 text-xs">Maintainer: @alex (left company)</div>
-                <div className="mt-2 text-green-400">✅ Checklist</div>
-                <div className="mt-1 text-sm">1. Check upstream API status</div>
-                <div>2. Check recent deploys</div>
-                <div>3. Look for spikes in usage</div>
+              <div className="p-3 text-xs font-mono text-white">
+                <div><span className="text-purple-400">const</span> <span className="text-blue-300">ws</span> = <span className="text-purple-400">await</span> <span className="text-blue-300">sdk.websocket()</span>.<span className="text-blue-300">connect</span>();</div>
+                <div>
+  <span className="text-blue-300">ws</span>.<span className="text-blue-300">on</span>(
+    <span className="text-green-300">'message'</span>, 
+    (<span className="text-blue-300">msg</span>) =&gt; <span className="text-white">{'{'}</span>
+  </div>
+  <div className="pl-4">
+    <span className="text-blue-300">console.log</span>(
+      <span className="text-green-300">'Live update:'</span>, 
+      <span className="text-blue-300">msg</span>
+    );
+  </div>
+  <div>
+    <span className="text-white">{'});'}</span>
+  </div>
               </div>
             </div>
           </div>
         )}
 
-        {activeWindow === 'alerts' && (
+        {activeWindow === 'infos' && (
           <div className="absolute bottom-32 left-1/2 transform -translate-x-1/2 mb-4 animate-in slide-in-from-bottom-2 duration-300">
-            <div className="bg-gray-900/95 backdrop-blur-md rounded-lg border border-gray-600 w-80 h-48 overflow-hidden">
+            <div className="bg-gray-900/95 backdrop-blur-md rounded-lg border border-gray-600 w-80 h-32 overflow-hidden">
               <div className="flex items-center justify-between px-3 py-2 bg-gray-800 border-b border-gray-700">
                 <div className="flex items-center space-x-2">
                   <div className="w-2 h-2 bg-red-500 rounded-full"></div>
                   <div className="w-2 h-2 bg-yellow-500 rounded-full"></div>
                   <div className="w-2 h-2 bg-green-500 rounded-full"></div>
                 </div>
-                <span className="text-white text-xs">Alerts</span>
+                <span className="text-white text-xs">Info</span>
                 <div className="w-8"></div>
               </div>
-              <div className="p-3 space-y-2">
-                <div className="bg-blue-500/20 border border-blue-500/30 rounded p-2">
-                  <div className="text-blue-400 text-xs">You just broke our app</div>
-                  <div className="text-gray-300 text-xs">We're done using your product. Why is it so unreliable?</div>
-                </div>
-                <div className="bg-purple-500/20 border border-purple-500/30 rounded p-2">
-                  <div className="text-purple-400 text-xs">#security</div>
-                  <div className="text-gray-300 text-xs">Thibaud: ...are we being DDOS'd?</div>
-                </div>
-                <div className="bg-green-500/20 border border-green-500/30 rounded p-2">
-                  <div className="text-green-400 text-xs">Incident Created</div>
-                  <div className="text-gray-300 text-xs">[Critical] /login error rate spiked to 47%</div>
-                </div>
+              <div className="p-3 text-xs font-mono text-white">
+                <div><span className="text-purple-400">const</span> <span className="text-blue-300">info</span> = <span className="text-purple-400">await</span> <span className="text-blue-300">sdk.info()</span>;</div>
+                <div><span className="text-blue-300">console.log</span>(<span className="text-blue-300">info</span>);</div>
               </div>
             </div>
           </div>
@@ -371,25 +365,25 @@ export default function Home() {
               </svg>
             </Link>
             
-            <Link href="/docs" className={`w-12 h-12 bg-gray-900 rounded-xl flex items-center justify-center hover:scale-110 transition-all duration-200 ${activeWindow === 'docs' ? 'ring-1 ring-teal-400 shadow-[0_0_15px_rgba(20,184,166,0.7)]' : ''}`}>
+            <Link href="/WebSocket" className={`w-12 h-12 bg-gray-900 rounded-xl flex items-center justify-center hover:scale-110 transition-all duration-200 ${activeWindow === 'WebSocket' ? 'ring-1 ring-teal-400 shadow-[0_0_15px_rgba(20,184,166,0.7)]' : ''}`}>
               <svg className="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 20 20">
                 <path fillRule="evenodd" d="M3 4a1 1 0 011-1h12a1 1 0 011 1v2a1 1 0 01-1 1H4a1 1 0 01-1-1V4zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clipRule="evenodd"/>
               </svg>
             </Link>
             
-            <Link href="/api" className={`w-12 h-12 bg-gray-900 rounded-xl flex items-center justify-center hover:scale-110 transition-all duration-200 ${activeWindow === 'linear' ? 'ring-1 ring-teal-400 shadow-[0_0_15px_rgba(20,184,166,0.7)]' : ''}`}>
+            <Link href="/api" className={`w-12 h-12 bg-gray-900 rounded-xl flex items-center justify-center hover:scale-110 transition-all duration-200 ${activeWindow === 'Stats' ? 'ring-1 ring-teal-400 shadow-[0_0_15px_rgba(20,184,166,0.7)]' : ''}`}>
               <svg className="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 20 20">
                 <path d="M3 3a1 1 0 000 2v8a2 2 0 002 2h2.586l-1.293 1.293a1 1 0 101.414 1.414L10 15.414l2.293 2.293a1 1 0 001.414-1.414L12.414 15H15a2 2 0 002-2V5a1 1 0 100-2H3zm11.707 4.707a1 1 0 00-1.414-1.414L10 9.586 6.707 6.293a1 1 0 00-1.414 1.414l4 4a1 1 0 001.414 0l4-4z"/>
               </svg>
             </Link>
             
-            <Link href="/dashboard" className={`w-12 h-12 bg-gray-900 rounded-xl flex items-center justify-center hover:scale-110 transition-all duration-200 ${activeWindow === 'metrics' ? 'ring-1 ring-teal-400 shadow-[0_0_15px_rgba(20,184,166,0.7)]' : ''}`}>
+            <Link href="/dashboard" className={`w-12 h-12 bg-gray-900 rounded-xl flex items-center justify-center hover:scale-110 transition-all duration-200 ${activeWindow === 'Pools' ? 'ring-1 ring-teal-400 shadow-[0_0_15px_rgba(20,184,166,0.7)]' : ''}`}>
               <svg className="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 20 20">
                 <path d="M3 4a1 1 0 011-1h12a1 1 0 011 1v2a1 1 0 01-1 1H4a1 1 0 01-1-1V4zM3 10a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H4a1 1 0 01-1-1v-6zM14 9a1 1 0 00-1 1v6a1 1 0 001 1h2a1 1 0 001-1v-6a1 1 0 00-1-1h-2z"/>
               </svg>
             </Link>
             
-            <Link href="/settings" className={`w-12 h-12 bg-gray-900 rounded-xl flex items-center justify-center hover:scale-110 transition-all duration-200 ${activeWindow === 'alerts' ? 'ring-1 ring-teal-400 shadow-[0_0_15px_rgba(20,184,166,0.7)]' : ''}`}>
+            <Link href="/settings" className={`w-12 h-12 bg-gray-900 rounded-xl flex items-center justify-center hover:scale-110 transition-all duration-200 ${activeWindow === 'infos' ? 'ring-1 ring-teal-400 shadow-[0_0_15px_rgba(20,184,166,0.7)]' : ''}`}>
               <svg className="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 20 20">
                 <path fillRule="evenodd" d="M11.49 3.17c-.38-1.56-2.6-1.56-2.98 0a1.532 1.532 0 01-2.286.948c-1.372-.836-2.942.734-2.106 2.106.54.886.061 2.042-.947 2.287-1.561.379-1.561 2.6 0 2.978a1.532 1.532 0 01.947 2.287c-.836 1.372.734 2.942 2.106 2.106a1.532 1.532 0 012.287.947c.379 1.561 2.6 1.561 2.978 0a1.533 1.533 0 012.287-.947c1.372.836 2.942-.734 2.106-2.106a1.533 1.533 0 01.947-2.287c1.561-.379 1.561-2.6 0-2.978a1.532 1.532 0 01-.947-2.287c.836-1.372-.734-2.942-2.106-2.106a1.532 1.532 0 01-2.287-.947zM10 13a3 3 0 100-6 3 3 0 000 6z" clipRule="evenodd"/>
               </svg>
