@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from 'react';
+import { motion } from 'framer-motion';
 import Link from "next/link";
 import Image from "next/image";
 import lixerLogo from '@/assets/logos/Lixer.png';
@@ -20,13 +21,13 @@ export default function Home() {
       const scrollPercentage = newScrollY / (document.documentElement.scrollHeight - windowHeight);
       
       // Initially no terminals, show them as we scroll
-      if (newScrollY <= 10) {
+      if (scrollPercentage < 0.17) {
         setActiveWindow(null);
-      } else if (scrollPercentage < 0.4) {
+      } else if (scrollPercentage < 0.5) {
         setActiveWindow('metrics');
-      } else if (scrollPercentage < 0.6) {
-        setActiveWindow('linear');
       } else if (scrollPercentage < 0.8) {
+        setActiveWindow('linear');
+      } else if (scrollPercentage < 0.9) {
         setActiveWindow('docs');
       } else {
         setActiveWindow('alerts');
@@ -40,14 +41,19 @@ export default function Home() {
   return (
     <div className="min-h-screen bg-black text-white">
       {/* First Section - Opening Statement */}
-    
 
       {/* Second Section with Code Editor */}
-      <section className="min-h-screen flex flex-col items-center justify-center px-6">
+      <motion.section
+        className="min-h-screen flex flex-col items-center justify-center px-6"
+        initial={{ opacity: 0, y: 80 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        transition={{ duration: 1.2, ease: 'easeOut' }}
+        viewport={{ once: true, amount: 0.5 }}
+      >
         <div className="text-center max-w-4xl mx-auto mb-12">
           <h2 className="text-4xl md:text-5xl lg:text-6xl font-light leading-tight text-gray-300 mb-6">
-            It has never been <br />
-            easier to build <span className="text-white">software</span>.
+            Integrate, analyze, and launch <br />
+            without the <span className="text-white">complexity</span>.
           </h2>
         </div>
 
@@ -62,8 +68,8 @@ export default function Home() {
                 <div className="w-2.5 h-2.5 bg-green-500 rounded-full"></div>
               </div>
               <div className="flex items-center text-gray-400 text-xs">
-                <span className="mr-1">🚀</span>
-                <span>frontend</span>
+                <span className="mr-1"></span>
+                <span>workspace</span>
               </div>
               <div className="w-16"></div>
             </div>
@@ -72,78 +78,36 @@ export default function Home() {
               {/* Main Code Area */}
               <div className="flex-1 p-4">
                 <div className="font-mono text-xs leading-5">
-                  <div className="text-gray-500">1</div>
+                  
                   <div className="text-gray-500">2   <span className="text-purple-400">import</span> <span className="text-blue-300">React</span>, <span className="text-blue-300">{'{ useState, useEffect }'}</span> <span className="text-purple-400">from</span> <span className="text-green-300">'react'</span>;</div>
                   <div className="text-gray-500">3   <span className="text-purple-400">import</span> <span className="text-blue-300">{'{ Lixer }'}</span> <span className="text-purple-400">from</span> <span className="text-green-300">'@lixer/sdk'</span>;</div>
-                  <div className="text-gray-500">4   <span className="text-purple-400">import</span> <span className="text-blue-300">{'{ formatTimeZone }'}</span> <span className="text-purple-400">from</span> <span className="text-green-300">'date-fns-tz'</span>;</div>
-                  <div className="text-gray-500">5</div>
-                  <div className="text-gray-500">6   <span className="text-purple-400">interface</span> <span className="text-yellow-300">Props</span> <span className="text-white">{'{'}</span></div>
-                  <div className="text-gray-500">7     <span className="text-blue-300">isoTimestamp</span>: <span className="text-yellow-300">string</span>; <span className="text-gray-600">// e.g. "2025-06-01T14:00:00Z"</span></div>
-                  <div className="text-gray-500">8     <span className="text-blue-300">userId</span>: <span className="text-yellow-300">string</span>;</div>
-                  <div className="text-gray-500">9   <span className="text-white">{'}'}</span></div>
-                  <div className="text-gray-500">10</div>
-                  <div className="text-gray-500">11  <span className="text-purple-400">export</span> <span className="text-purple-400">function</span> <span className="text-yellow-300">LixerFormatter</span><span className="text-white">({'{'} <span className="text-blue-300">isoTimestamp</span>, <span className="text-blue-300">userId</span> {'}'}: <span className="text-yellow-300">Props</span>) <span className="text-white">{'{'}</span></span></div>
-                  <div className="text-gray-500">12    <span className="text-purple-400">const</span> [<span className="text-blue-300">timezone</span>, <span className="text-blue-300">setTimezone</span>] = <span className="text-yellow-300">useState</span><span className="text-white">&lt;</span><span className="text-yellow-300">string</span> | <span className="text-purple-400">null</span><span className="text-white">&gt;(</span><span className="text-purple-400">null</span><span className="text-white">);</span></div>
-                  <div className="text-gray-500">13    <span className="text-purple-400">const</span> [<span className="text-blue-300">error</span>, <span className="text-blue-300">setError</span>] = <span className="text-yellow-300">useState</span><span className="text-white">&lt;</span><span className="text-yellow-300">string</span> | <span className="text-purple-400">null</span><span className="text-white">&gt;(</span><span className="text-purple-400">null</span><span className="text-white">);</span></div>
-                  <div className="text-gray-500">14</div>
-                  <div className="text-gray-500">15    <span className="text-yellow-300">useEffect</span><span className="text-white">(() =&gt; {'{'}</span></div>
-                  <div className="text-gray-500">16      <span className="text-purple-400">const</span> <span className="text-blue-300">fetchTimezone</span> = <span className="text-purple-400">async</span> <span className="text-white">() =&gt; {'{'}</span></div>
-                  <div className="text-gray-500">17        <span className="text-purple-400">try</span> <span className="text-white">{'{'}</span></div>
-                  <div className="text-gray-500">18          <span className="text-purple-400">const</span> <span className="text-blue-300">res</span> = <span className="text-purple-400">await</span> <span className="text-yellow-300">fetch</span><span className="text-white">(</span><span className="text-green-300">{"`/api/user/${userId}/timezone`"}</span><span className="text-white">);</span></div>
+                  <div className="text-gray-500">4</div>
+                  <div className="text-gray-500">5   <span className="text-purple-400">const</span> <span className="text-blue-300">sdk</span> = <span className="text-yellow-300">new</span> <span className="text-blue-300">Lixer</span><span className="text-white">(</span><span className="text-green-300">'https://api.lixer.xyz'</span><span className="text-white">);</span></div>
+                  <div className="text-gray-500">6</div>
+                  <div className="text-gray-500">7   <span className="text-purple-400">async</span> <span className="text-purple-400">function</span> <span className="text-yellow-300">getPoolStats</span>() <span className="text-white">{'{'}</span></div>
+                  <div className="text-gray-500">8     <span className="text-purple-400">const</span> <span className="text-blue-300">stats</span> = <span className="text-purple-400">await</span> <span className="text-blue-300">sdk.stats.getPoolStats</span><span className="text-white">(</span><span className="text-green-300">'hyperswap'</span>, <span className="text-green-300">'0xPoolAddress'</span><span className="text-white">);</span></div>
+                  <div className="text-gray-500">9     <span className="text-blue-300">console.log</span><span className="text-white">(</span><span className="text-blue-300">stats</span><span className="text-white">);</span></div>
+                  <div className="text-gray-500">10  <span className="text-white">{'}'}</span></div>
+                  <div className="text-gray-500">11</div>
+                  <div className="text-gray-500">12  <span className="text-purple-400">getPoolStats</span>();</div>
+                  <div className="text-gray-500">13</div>
+                  <div className="text-gray-500">14  <span className="text-purple-400">async</span> <span className="text-purple-400">function</span> <span className="text-yellow-300">getRecentSwaps</span>() <span className="text-white">{'{'}</span></div>
+                  <div className="text-gray-500">15    <span className="text-purple-400">const</span> <span className="text-blue-300">swaps</span> = <span className="text-purple-400">await</span> <span className="text-blue-300">sdk.swaps.getRecentSwaps</span><span className="text-white">(</span><span className="text-green-300">'hyperswap'</span><span className="text-white">);</span></div>
+                  <div className="text-gray-500">16    <span className="text-blue-300">console.log</span><span className="text-white">(</span><span className="text-blue-300">swaps</span><span className="text-white">);</span></div>
+                  <div className="text-gray-500">17  <span className="text-white">{'}'}</span></div>
+                  <div className="text-gray-500">18</div>
+                  <div className="text-gray-500">19  <span className="text-purple-400">getRecentSwaps</span>();</div>
+                  <div className="text-gray-500">20</div>
+                  <div className="text-gray-500">21  <span className="text-purple-400">async</span> <span className="text-purple-400">function</span> <span className="text-yellow-300">getHealthStatus</span>() <span className="text-white">{'{'}</span></div>
+                  <div className="text-gray-500">22    <span className="text-purple-400">const</span> <span className="text-blue-300">health</span> = <span className="text-purple-400">await</span> <span className="text-blue-300">sdk.health.getStatus</span><span className="text-white">();</span></div>
+                  <div className="text-gray-500">23    <span className="text-blue-300">console.log</span><span className="text-white">(</span><span className="text-blue-300">health</span><span className="text-white">);</span></div>
+                  <div className="text-gray-500">24  <span className="text-white">{'}'}</span></div>
+                 
                 </div>
               </div>
 
               {/* Right Sidebar */}
-              <div className="w-56 bg-gray-800 border-l border-gray-700 p-2">
-                <div className="mb-3">
-                  <div className="text-gray-300 text-xs font-medium mb-1">
-                    🔍 New ErrorBoundary component with error handling and reload functionality
-                  </div>
-                </div>
-
-                {/* Status Indicators */}
-                <div className="space-y-1.5">
-                  <div className="flex items-center space-x-1.5">
-                    <div className="w-1.5 h-1.5 bg-green-500 rounded-full"></div>
-                    <div className="w-1.5 h-1.5 bg-green-500 rounded-full"></div>
-                    <div className="w-1.5 h-1.5 bg-green-500 rounded-full"></div>
-                    <div className="w-1.5 h-1.5 bg-green-500 rounded-full"></div>
-                    <div className="w-1.5 h-1.5 bg-gray-600 rounded-full"></div>
-                    <span className="text-xs text-gray-400">+22</span>
-                  </div>
-
-                  {/* Notifications */}
-                  <div className="space-y-1">
-                    <div className="bg-red-500/20 border border-red-500/30 rounded p-1.5">
-                      <div className="text-red-400 text-xs font-medium">❌ Error</div>
-                      <div className="text-gray-300 text-xs">
-                        [P2] GET /api/user/id/timezone - p95 latency &gt; 2s
-                      </div>
-                    </div>
-
-                    <div className="bg-yellow-500/20 border border-yellow-500/30 rounded p-1.5">
-                      <div className="text-yellow-400 text-xs font-medium">⚠️ Alert</div>
-                      <div className="text-gray-300 text-xs">
-                        Unused/empty chunk that can be removed
-                      </div>
-                    </div>
-
-                    <div className="bg-green-500/20 border border-green-500/30 rounded p-1.5">
-                      <div className="text-green-400 text-xs font-medium">✅ Success</div>
-                      <div className="text-gray-300 text-xs">
-                        Build completed successfully
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Deploy Button */}
-                  <div className="mt-3">
-                    <button className="w-full px-2 py-1 bg-white text-black rounded font-medium text-xs hover:bg-gray-100 transition-colors">
-                      Deploy
-                    </button>
-                  </div>
-                </div>
-              </div>
+     
             </div>
 
             {/* Bottom Status Bar */}
@@ -161,30 +125,48 @@ export default function Home() {
             </div>
           </div>
         </div>
-      </section>
+      </motion.section>
 
       {/* Third Section - Philosophy */}
-      <section className="min-h-screen flex items-center justify-center px-6">
+      <motion.section
+        className="min-h-screen flex items-center justify-center px-6"
+        initial={{ opacity: 0, y: 80 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        transition={{ duration: 1.2, ease: 'easeOut' }}
+        viewport={{ once: true, amount: 0.5 }}
+      >
         <div className="text-center max-w-5xl mx-auto">
           <h2 className="text-5xl md:text-6xl lg:text-7xl font-light leading-tight text-gray-300">
-            But at the center of everything <br />
-            we build is a <span className="text-white">black box</span>.
+            Instantly stream DEX swap events <br />
+            for <span className="text-teal-300">dashboards, MEV bots</span>.
           </h2>
         </div>
-      </section>
+      </motion.section>
 
       {/* Fourth Section - Hero */}
-      <section className="min-h-screen flex items-center justify-center px-6">
+      <motion.section
+        className="min-h-screen flex items-center justify-center px-6"
+        initial={{ opacity: 0, y: 80 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        transition={{ duration: 1.2, ease: 'easeOut' }}
+        viewport={{ once: true, amount: 0.5 }}
+      >
         <div className="text-center max-w-5xl mx-auto">
           <h1 className="text-6xl md:text-7xl lg:text-8xl font-light leading-tight mb-8">
-            The fastest way to <br />
-            <span className="text-teal-300">integrate DeFi data</span>.
+             Built on Hyperliquid <br />
+             powered by <span className="text-teal-300">Liquid Labs and Goldsky</span>.
           </h1>
         </div>
-      </section>
+      </motion.section>
 
       {/* Simple Features */}
-      <section className="min-h-screen flex items-center justify-center px-6">
+      <motion.section
+        className="min-h-screen flex items-center justify-center px-6"
+        initial={{ opacity: 0, y: 80 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        transition={{ duration: 1.2, ease: 'easeOut' }}
+        viewport={{ once: true, amount: 0.5 }}
+      >
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-20">
             <h2 className="text-5xl md:text-6xl font-light text-gray-300 mb-16">
@@ -202,7 +184,7 @@ export default function Home() {
             <div className="text-center">
               <h3 className="text-2xl font-light mb-4 text-white">Simple</h3>
               <p className="text-gray-400 text-lg leading-relaxed">
-                One API call to access liquidity data from Uniswap, SushiSwap, and 50+ protocols.
+                One API call to access liquidity data from hyperswap, SushiSwap, and 50+ protocols.
               </p>
             </div>
             <div className="text-center">
@@ -213,10 +195,16 @@ export default function Home() {
             </div>
           </div>
         </div>
-      </section>
+      </motion.section>
 
       {/* Final CTA */}
-      <section className="min-h-screen flex items-center justify-center px-6">
+      <motion.section
+        className="min-h-screen flex items-center justify-center px-6"
+        initial={{ opacity: 0, y: 80 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        transition={{ duration: 1.2, ease: 'easeOut' }}
+        viewport={{ once: true, amount: 0.5 }}
+      >
         <div className="text-center max-w-4xl mx-auto">
           <h2 className="text-6xl md:text-7xl lg:text-8xl font-light leading-tight mb-12">
             Start building <br />
@@ -238,7 +226,7 @@ export default function Home() {
             </Link>
           </div>
         </div>
-      </section>
+      </motion.section>
 
       {/* Simple Footer */}
       <footer className="py-12 px-6 border-t border-gray-800">
