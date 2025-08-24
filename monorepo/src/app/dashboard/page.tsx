@@ -1,37 +1,16 @@
 'use client';
 
 import React, { useState, useEffect, useCallback } from 'react';
-import axios, { AxiosResponse } from 'axios';
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, BarChart, Bar, PieChart, Pie, Cell, ScatterChart, Scatter, AreaChart, Area, ComposedChart } from 'recharts';
-import { TrendingUp, TrendingDown, Activity, DollarSign, BarChart3, Timer, ArrowUpDown, Users, Volume2, Calendar, RefreshCw, Zap } from 'lucide-react';
 import { Header}from './components/header';
 import { TimeRangeSelection } from './components/timepageSelection';
 import { formatCurrency, formatGwei, formatNumber, formatTime, safeParseFloat, safeParseInt, getTokenSymbol, getTimeRangeParams } from '@/utils/dashboardUtils';
 import { KeyMetrics } from './components/keyMetreics';
 import { EnhancedChartsGrid } from './components/enhancedChartsGrid';
 import { PoolDistributionCharts } from './components/poolDistributionCharts';
-
-const API_BASE_URL = env.API_BASE_URL || 'http://localhost:3000';
-
 import { Pool, TimeseriesResponse, SwapData, SwapResponse, GlobalStats, ChartDataPoint, PoolAnalytics, DashboardData } from '@/utils/interfaces';
 import { TimeRange, COLORS } from '@/utils/constants';
 import { EnhancedPoolAnalyticsTable } from './components/enhancedPoolAnalyticsTable';
-import { env } from 'process';
-
-const api = {
-  getPools: (): Promise<AxiosResponse<Pool[]>> => 
-    axios.get(`${API_BASE_URL}/pools`),
-  
-  getTimeseries: (interval: string = 'hour', limit: number = 24): Promise<AxiosResponse<TimeseriesResponse>> => 
-    axios.get(`${API_BASE_URL}/timeseries/volume?interval=${interval}&limit=${limit}`),
-
-  getSwaps: (poolAddress?: string, limit: number = 100): Promise<AxiosResponse<SwapResponse>> => {
-    const url = poolAddress 
-      ? `${API_BASE_URL}/swaps?pool=${poolAddress}&limit=${limit}`
-      : `${API_BASE_URL}/swaps?limit=${limit}`;
-    return axios.get(url);
-  },
-};
+import { dashboardApi as api } from '@/api/dashboard';
 
 const DeFiAnalyticsDashboard: React.FC = () => {
   const [data, setData] = useState<DashboardData>({
