@@ -47,100 +47,128 @@ export const RecentSwaps: React.FC<RecentSwapsProps> = ({ data, limit = 20 }) =>
     .slice(0, limit);
 
   return (
-    <div className="bg-white rounded-xl shadow-lg p-6">
-      <div className="flex items-center justify-between mb-6">
-        <h2 className="text-2xl font-bold text-gray-900">Recent Swaps</h2>
-        <div className="text-sm text-gray-500">
+  <div className="bg-gray-900 rounded-xl border border-gray-700 shadow-xl overflow-hidden">
+    <div className="flex items-center justify-between px-6 py-5 border-b border-gray-700">
+      <div>
+        <h2 className="text-2xl font-light text-gray-300">Recent Swaps</h2>
+        <p className="text-sm text-gray-500 mt-1">Live trading activity across pools</p>
+      </div>
+      <div className="flex items-center space-x-2">
+        <div className="w-2 h-2 bg-teal-400 rounded-full animate-pulse"></div>
+        <div className="text-sm text-gray-400">
           Last {recentSwaps.length} swaps
         </div>
       </div>
+    </div>
 
-      <div className="overflow-x-auto">
-        <table className="min-w-full">
-          <thead>
-            <tr className="border-b border-gray-200">
-              <th className="text-left py-3 px-2 text-sm font-semibold text-gray-600">Pool</th>
-              <th className="text-left py-3 px-2 text-sm font-semibold text-gray-600">Type</th>
-              <th className="text-right py-3 px-2 text-sm font-semibold text-gray-600">Amount</th>
-              <th className="text-right py-3 px-2 text-sm font-semibold text-gray-600">Gas</th>
-              <th className="text-right py-3 px-2 text-sm font-semibold text-gray-600">Time</th>
-              <th className="text-left py-3 px-2 text-sm font-semibold text-gray-600">Trader</th>
-            </tr>
-          </thead>
-          <tbody className="divide-y divide-gray-100">
-            {recentSwaps.map((swap, index) => {
-              const poolInfo = getPoolInfo(swap.poolAddress);
-              const swapType = getSwapType(swap);
-              const amount0 = Math.abs(safeParseFloat(swap.amount0)) / Math.pow(10, 18);
-              const amount1 = Math.abs(safeParseFloat(swap.amount1)) / Math.pow(10, 18);
-              const gasUsed = safeParseInt(swap.gasUsed);
-              const gasPrice = safeParseInt(swap.gasPrice) / 1e9;
-              
-              return (
-                <tr key={`${swap.poolAddress}-${swap.timestamp}-${index}`} className="hover:bg-gray-50 transition-colors">
-                  <td className="py-3 px-2">
-                    <div className="flex items-center space-x-2">
-                      <div className="flex -space-x-1">
-                        <div className="w-6 h-6 bg-blue-500 rounded-full flex items-center justify-center text-white text-xs font-bold">
-                          {poolInfo.token0Symbol.charAt(0)}
-                        </div>
-                        <div className="w-6 h-6 bg-green-500 rounded-full flex items-center justify-center text-white text-xs font-bold">
-                          {poolInfo.token1Symbol.charAt(0)}
-                        </div>
+    <div className="overflow-x-auto">
+      <table className="min-w-full">
+        <thead>
+          <tr className="border-b border-gray-700 bg-gray-800/50">
+            <th className="text-left py-4 px-4 text-sm font-medium text-gray-400 uppercase tracking-wider">Pool</th>
+            <th className="text-left py-4 px-4 text-sm font-medium text-gray-400 uppercase tracking-wider">Type</th>
+            <th className="text-right py-4 px-4 text-sm font-medium text-gray-400 uppercase tracking-wider">Amount</th>
+            <th className="text-right py-4 px-4 text-sm font-medium text-gray-400 uppercase tracking-wider">Gas</th>
+            <th className="text-right py-4 px-4 text-sm font-medium text-gray-400 uppercase tracking-wider">Time</th>
+            <th className="text-left py-4 px-4 text-sm font-medium text-gray-400 uppercase tracking-wider">Trader</th>
+          </tr>
+        </thead>
+        <tbody className="divide-y divide-gray-700/50">
+          {recentSwaps.map((swap, index) => {
+            const poolInfo = getPoolInfo(swap.poolAddress);
+            const swapType = getSwapType(swap);
+            const amount0 = Math.abs(safeParseFloat(swap.amount0)) / Math.pow(10, 18);
+            const amount1 = Math.abs(safeParseFloat(swap.amount1)) / Math.pow(10, 18);
+            const gasUsed = safeParseInt(swap.gasUsed);
+            const gasPrice = safeParseInt(swap.gasPrice) / 1e9;
+            
+            return (
+              <tr key={`${swap.poolAddress}-${swap.timestamp}-${index}`} className="hover:bg-gray-800/30 transition-colors duration-200">
+                <td className="py-4 px-4">
+                  <div className="flex items-center space-x-3">
+                    <div className="flex -space-x-1">
+                      <div className="w-7 h-7 bg-gradient-to-br from-teal-500 to-teal-300 rounded-full flex items-center justify-center text-white text-xs font-bold shadow-lg border-2 border-gray-800">
+                        {poolInfo.token0Symbol.charAt(0)}
                       </div>
-                      <span className="text-sm font-medium text-gray-900">
-                        {poolInfo.token0Symbol}/{poolInfo.token1Symbol}
+                      <div className="w-7 h-7 bg-gradient-to-br from-teal-500 to-teal-300 rounded-full flex items-center justify-center text-white text-xs font-bold shadow-lg border-2 border-gray-800">
+                        {poolInfo.token1Symbol.charAt(0)}
+                      </div>
+                    </div>
+                    <span className="text-sm font-medium text-white">
+                      {poolInfo.token0Symbol}/{poolInfo.token1Symbol}
+                    </span>
+                  </div>
+                </td>
+                <td className="py-4 px-4">
+                  <span className={`inline-flex items-center px-3 py-1.5 rounded-full text-xs font-medium border ${
+                    swapType === 'buy' 
+                      ? 'bg-teal-500/20 text-teal-300 border-teal-500/30' 
+                      : 'bg-red-500/20 text-red-300 border-red-500/30'
+                  }`}>
+                    {swapType === 'buy' ? (
+                      <>
+                        <svg className="w-3 h-3 mr-1" viewBox="0 0 12 12" fill="currentColor">
+                          <path d="M6 2L10 6H8V10H4V6H2L6 2Z"/>
+                        </svg>
+                        Buy
+                      </>
+                    ) : (
+                      <>
+                        <svg className="w-3 h-3 mr-1" viewBox="0 0 12 12" fill="currentColor">
+                          <path d="M6 10L2 6H4V2H8V6H10L6 10Z"/>
+                        </svg>
+                        Sell
+                      </>
+                    )}
+                  </span>
+                </td>
+                <td className="py-4 px-4 text-right">
+                  <div className="text-sm font-medium text-white">
+                    {formatValue(Math.max(amount0, amount1))}
+                  </div>
+                  <div className="text-xs text-gray-500 mt-1">
+                    {amount0.toFixed(4)} / {amount1.toFixed(4)}
+                  </div>
+                </td>
+                <td className="py-4 px-4 text-right">
+                  <div className="text-sm text-white font-medium">
+                    {(gasUsed * gasPrice / 1e9).toFixed(4)} ETH
+                  </div>
+                  <div className="text-xs text-gray-500 mt-1">
+                    {gasUsed.toLocaleString()} gas
+                  </div>
+                </td>
+                <td className="py-4 px-4 text-right">
+                  <span className="text-sm text-gray-300">
+                    {formatTime(swap.timestamp)}
+                  </span>
+                </td>
+                <td className="py-4 px-4">
+                  <div className="flex items-center space-x-2">
+                    <div className="w-6 h-6 bg-gradient-to-br from-teal-500 to-teal-300 rounded-full flex items-center justify-center">
+                      <span className="text-xs text-white font-bold">
+                        {swap.sender.slice(2, 4).toUpperCase()}
                       </span>
                     </div>
-                  </td>
-                  <td className="py-3 px-2">
-                    <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
-                      swapType === 'buy' 
-                        ? 'bg-green-100 text-green-800' 
-                        : 'bg-red-100 text-red-800'
-                    }`}>
-                      {swapType === 'buy' ? '↗ Buy' : '↘ Sell'}
-                    </span>
-                  </td>
-                  <td className="py-3 px-2 text-right">
-                    <div className="text-sm font-medium text-gray-900">
-                      {formatValue(Math.max(amount0, amount1))}
-                    </div>
-                    <div className="text-xs text-gray-500">
-                      {amount0.toFixed(4)} / {amount1.toFixed(4)}
-                    </div>
-                  </td>
-                  <td className="py-3 px-2 text-right">
-                    <div className="text-sm text-gray-900">
-                      {(gasUsed * gasPrice / 1e9).toFixed(4)} ETH
-                    </div>
-                    <div className="text-xs text-gray-500">
-                      {gasUsed.toLocaleString()} gas
-                    </div>
-                  </td>
-                  <td className="py-3 px-2 text-right">
-                    <span className="text-sm text-gray-600">
-                      {formatTime(swap.timestamp)}
-                    </span>
-                  </td>
-                  <td className="py-3 px-2">
-                    <span className="text-sm font-mono text-gray-600">
+                    <span className="text-sm font-mono text-gray-400">
                       {swap.sender.slice(0, 6)}...{swap.sender.slice(-4)}
                     </span>
-                  </td>
-                </tr>
-              );
-            })}
-          </tbody>
-        </table>
-      </div>
-
-      {recentSwaps.length === 0 && (
-        <div className="text-center py-8">
-          <div className="text-gray-400 text-4xl mb-2">📊</div>
-          <p className="text-gray-500">No recent swaps available</p>
-        </div>
-      )}
+                  </div>
+                </td>
+              </tr>
+            );
+          })}
+        </tbody>
+      </table>
     </div>
-  );
+
+    {recentSwaps.length === 0 && (
+      <div className="text-center py-12">
+        <div className="text-gray-600 text-5xl mb-4">📊</div>
+        <p className="text-gray-400 text-lg">No recent swaps available</p>
+        <p className="text-gray-600 text-sm mt-2">Swaps will appear here as they happen</p>
+      </div>
+    )}
+  </div>
+);
 };
