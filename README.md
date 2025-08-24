@@ -35,6 +35,7 @@ Lixer is built as a multi-component system designed for scalability and real-tim
 #### 1. [**SDK**](https://www.npmjs.com/package/@lixersdk/sdk) (`/sdk`)
 A lightweight JavaScript/Node.js SDK available on npm that provides instant access to Lixer's data without any configuration:
 
+javascript:
 ```javascript
 const LixerSDK = require('@lixersdk/sdk');
 const lixer = new LixerSDK();
@@ -47,6 +48,25 @@ const pools = await lixer.pools().getAll();
 
 // Subscribe to real-time events
 const ws = await lixer.websocket().connect();
+```
+typescript:
+```typescript
+import LixerSDK from '@lixersdk/sdk';
+
+const lixer = new LixerSDK();
+
+export const dashboardApi = {
+    getPools: async (): Promise<Pool[]> => {
+    const sdkPools = await lixer.pools().getAll();
+
+    return sdkPools.map((pool: any) => ({
+      address: pool.address,
+      metadata: pool.metadata,
+      ...pool,
+    }));
+  },
+}
+
 ```
 
 **Features:**
