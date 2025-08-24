@@ -32,6 +32,13 @@ app.use('/health', healthRoutes);
 app.use('/websocket', websocketRoutes);
 
 app.get('/', (req, res) => {
+  // Determine WebSocket URL based on environment
+  const protocol = req.secure || req.headers['x-forwarded-proto'] === 'https' ? 'wss' : 'ws';
+  const host = req.get('host');
+  const wsUrl = host
+    ? `${protocol}://${host}/ws`
+    : `ws://localhost:${WS_PORT}`;
+
   res.json({
     message: 'Lixer API Server',
     version: '1.0.0',
@@ -43,7 +50,7 @@ app.get('/', (req, res) => {
       health: '/health',
       factories: '/factories',
       tokens: '/tokens',
-      websocket: `ws://localhost:${WS_PORT}`
+      websocket: wsUrl
     }
   });
 });
