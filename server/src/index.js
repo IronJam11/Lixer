@@ -7,6 +7,7 @@ const poolsRoutes = require('./routes/pools');
 const statsRoutes = require('./routes/stats');
 const timeseriesRoutes = require('./routes/timeseries');
 const healthRoutes = require('./routes/health');
+const websocketRoutes = require('./routes/websocket');
 const SwapWebSocketServer = require('./services/wsServer');
 const SwapDataService = require('./services/swapDataService');
 const DatabaseService = require('./services/databaseService');
@@ -28,6 +29,7 @@ app.use('/pools', poolsRoutes);
 app.use('/stats', statsRoutes);
 app.use('/timeseries', timeseriesRoutes);
 app.use('/health', healthRoutes);
+app.use('/websocket', websocketRoutes);
 
 app.get('/', (req, res) => {
   res.json({

@@ -32,6 +32,10 @@ class LixerSDK {
   health() {
     return require('./services/health')(this.client);
   }
+
+  websocket() {
+    return require('./services/websocket')(this.client);
+  }
 }
 
 module.exports = LixerSDK;
