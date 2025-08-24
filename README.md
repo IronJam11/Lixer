@@ -2,6 +2,24 @@
 
 **Lixer** is a comprehensive SDK and analytics platform that provides real-time and historical swap data across all major DEXs supported by LiquidLabs. Built on top of Goldsky's infrastructure, Lixer delivers decoded swap events with sub-second latency, making it the ideal solution for analytics dashboards, MEV bots, yield optimizers, and DeFi applications.
 
+## Table of Contents
+
+- [Architecture Overview](#architecture-overview)
+  - [Data Indexing Layer](#data-indexing-layer)
+  - [Core Components](#core-components)
+- [Use Cases](#use-cases)
+- [Supported Protocols](#supported-protocols)
+- [Technical Specifications](#technical-specifications)
+- [Getting Started](#getting-started)
+  - [Installation](#installation)
+  - [Quick Start Example](#quick-start-example)
+  - [TypeScript Support](#typescript-support)
+- [API Documentation](#api-documentation)
+- [Contributing](#contributing)
+- [License](#license)
+- [Support](#support)
+- [Roadmap](#roadmap)
+
 ## Architecture Overview
 Lixer is built as a multi-component system designed for scalability and real-time data processing:
 
@@ -14,7 +32,7 @@ Lixer is built as a multi-component system designed for scalability and real-tim
 
 ### Core Components
 
-#### 1. **SDK** (`/sdk`)
+#### 1. [**SDK**](https://www.npmjs.com/package/@lixersdk/sdk) (`/sdk`)
 A lightweight JavaScript/Node.js SDK available on npm that provides instant access to Lixer's data without any configuration:
 
 ```javascript
@@ -150,7 +168,7 @@ All swap events include standardized fields:
 
 ### Installation
 
-Simply install the Lixer SDK from npm:
+Simply install the [Lixer SDK](https://www.npmjs.com/package/@lixersdk/sdk) from npm:
 
 ```bash
 npm install @lixersdk/sdk
@@ -264,21 +282,12 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 For support and questions:
 - Create an issue on GitHub
 - Check our [npm package documentation](https://www.npmjs.com/package/@lixersdk/sdk)
-- Join our [Discord community](https://discord.gg/lixer)
-- Read the [Documentation](https://docs.lixer.io)
 
-## Installation & Usage
 
-### NPM Installation
-```bash
-npm install @lixersdk/sdk
-```
 
 ## Roadmap
 
-- [ ] Support for additional blockchain networks (Polygon, Arbitrum, Optimism)
 - [ ] Advanced analytics and alerting features
-- [ ] GraphQL API endpoint
 - [ ] Mobile SDK for React Native
 - [ ] Enhanced WebSocket filtering capabilities
 - [ ] Integration with popular DeFi protocols
