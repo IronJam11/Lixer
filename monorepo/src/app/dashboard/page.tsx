@@ -3,7 +3,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { Header}from './components/header';
 import { TimeRangeSelection } from './components/timepageSelection';
-import { formatCurrency, formatGwei, formatNumber, formatTime, safeParseFloat, safeParseInt, getTokenSymbol, getTimeRangeParams } from '@/utils/dashboardUtils';
+import { safeParseFloat, safeParseInt, getTokenSymbol, getTimeRangeParams } from '@/utils/dashboardUtils';
 import { KeyMetrics } from './components/keyMetreics';
 import { EnhancedChartsGrid } from './components/enhancedChartsGrid';
 import { PoolDistributionCharts } from './components/poolDistributionCharts';
