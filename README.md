@@ -1,5 +1,8 @@
 # Lixer
 
+<img width="500" height="500" alt="WhatsApp_Image_2025-08-25_at_6 41 04_AM-removebg-preview" src="https://github.com/user-attachments/assets/2a43f26e-65fd-4bfd-88e7-1e930e0fc32a" />
+
+
 **Lixer** is a comprehensive SDK and analytics platform that provides real-time and historical swap data across all major DEXs supported by LiquidLabs. Built on top of Goldsky's infrastructure, Lixer delivers decoded swap events with sub-second latency, making it the ideal solution for analytics dashboards, MEV bots, yield optimizers, and DeFi applications.
 
 ## Table of Contents
