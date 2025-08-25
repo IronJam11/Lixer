@@ -199,6 +199,8 @@ npm install @lixersdk/sdk
 
 That's it! No configuration required - the SDK connects to our hosted infrastructure automatically.
 
+For detailed API reference and advanced usage examples, check out our [comprehensive documentation](https://ironjams-organization.gitbook.io/lixer-docs).
+
 ### Quick Start Example
 
 ```javascript
@@ -305,6 +307,8 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 For support and questions:
 - Create an issue on GitHub
 - Check our [npm package documentation](https://www.npmjs.com/package/@lixersdk/sdk)
+- Read the [Official Documentation](https://ironjams-organization.gitbook.io/lixer-docs)
+- Follow us on [Twitter](https://x.com/lixer_hl) for updates and announcements
 
 
 
