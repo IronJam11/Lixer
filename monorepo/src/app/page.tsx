@@ -15,12 +15,10 @@ export default function Home() {
     const handleScroll = () => {
       const newScrollY = window.scrollY;
       setScrollY(newScrollY);
-      
-      // Show different windows based on scroll position
+    
       const windowHeight = window.innerHeight;
       const scrollPercentage = newScrollY / (document.documentElement.scrollHeight - windowHeight);
-      
-      // Initially no terminals, show them as we scroll
+    
       if (scrollPercentage < 0.17) {
         setActiveWindow(null);
       } else if (scrollPercentage < 0.5) {
