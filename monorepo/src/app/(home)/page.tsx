@@ -80,19 +80,19 @@ export default function Home() {
                 <div className="font-mono text-xs leading-5">
                   
                   <div className="text-gray-500">2   <span className="text-purple-400">import</span> <span className="text-blue-300">React</span>, <span className="text-blue-300">{'{ useState, useEffect }'}</span> <span className="text-purple-400">from</span> <span className="text-green-300">react</span>;</div>
-                  <div className="text-gray-500">3   <span className="text-purple-400">import</span> <span className="text-blue-300">{'{ Lixer }'}</span> <span className="text-purple-400">from</span> <span className="text-green-300">'@lixer/sdk'</span>;</div>
+                  <div className="text-gray-500">3   <span className="text-purple-400">import</span> <span className="text-blue-300">{'{ Lixer }'}</span> <span className="text-purple-400">from</span> <span className="text-green-300">&#39;@lixer/sdk&#39;</span>;</div>
                   <div className="text-gray-500">4</div>
-                  <div className="text-gray-500">5   <span className="text-purple-400">const</span> <span className="text-blue-300">sdk</span> = <span className="text-yellow-300">new</span> <span className="text-blue-300">Lixer</span><span className="text-white">(</span><span className="text-green-300">'https://api.lixer.xyz'</span><span className="text-white">);</span></div>
+                  <div className="text-gray-500">5   <span className="text-purple-400">const</span> <span className="text-blue-300">sdk</span> = <span className="text-yellow-300">new</span> <span className="text-blue-300">Lixer</span><span className="text-white">(</span><span className="text-green-300">&#39;https://api.lixer.xyz&#39;</span><span className="text-white">);</span></div>
                   <div className="text-gray-500">6</div>
                   <div className="text-gray-500">7   <span className="text-purple-400">async</span> <span className="text-purple-400">function</span> <span className="text-yellow-300">getPoolStats</span>() <span className="text-white">{'{'}</span></div>
-                  <div className="text-gray-500">8     <span className="text-purple-400">const</span> <span className="text-blue-300">stats</span> = <span className="text-purple-400">await</span> <span className="text-blue-300">sdk.stats.getPoolStats</span><span className="text-white">(</span><span className="text-green-300">'hyperswap'</span>, <span className="text-green-300">'0xPoolAddress'</span><span className="text-white">);</span></div>
+                  <div className="text-gray-500">8     <span className="text-purple-400">const</span> <span className="text-blue-300">stats</span> = <span className="text-purple-400">await</span> <span className="text-blue-300">sdk.stats.getPoolStats</span><span className="text-white">(</span><span className="text-green-300">&#39;hyperswap&#39;</span>, <span className="text-green-300">&#39;0xPoolAddress&#39;</span><span className="text-white">);</span></div>
                   <div className="text-gray-500">9     <span className="text-blue-300">console.log</span><span className="text-white">(</span><span className="text-blue-300">stats</span><span className="text-white">);</span></div>
                   <div className="text-gray-500">10  <span className="text-white">{'}'}</span></div>
                   <div className="text-gray-500">11</div>
                   <div className="text-gray-500">12  <span className="text-purple-400">getPoolStats</span>();</div>
                   <div className="text-gray-500">13</div>
                   <div className="text-gray-500">14  <span className="text-purple-400">async</span> <span className="text-purple-400">function</span> <span className="text-yellow-300">getRecentSwaps</span>() <span className="text-white">{'{'}</span></div>
-                  <div className="text-gray-500">15    <span className="text-purple-400">const</span> <span className="text-blue-300">swaps</span> = <span className="text-purple-400">await</span> <span className="text-blue-300">sdk.swaps.getRecentSwaps</span><span className="text-white">(</span><span className="text-green-300">'hyperswap'</span><span className="text-white">);</span></div>
+                  <div className="text-gray-500">15    <span className="text-purple-400">const</span> <span className="text-blue-300">swaps</span> = <span className="text-purple-400">await</span> <span className="text-blue-300">sdk.swaps.getRecentSwaps</span><span className="text-white">(</span><span className="text-green-300">&#39;hyperswap&#39;</span><span className="text-white">);</span></div>
                   <div className="text-gray-500">16    <span className="text-blue-300">console.log</span><span className="text-white">(</span><span className="text-blue-300">swaps</span><span className="text-white">);</span></div>
                   <div className="text-gray-500">17  <span className="text-white">{'}'}</span></div>
                   <div className="text-gray-500">18</div>
@@ -266,8 +266,8 @@ export default function Home() {
               </div>
               <div className="p-3 text-xs font-mono text-white">
                 <div><span className="text-purple-400">const</span> <span className="text-blue-300">pools</span> = <span className="text-purple-400">await</span> <span className="text-blue-300">sdk.pools()</span>.<span className="text-blue-300">getAll</span>();</div>
-                <div><span className="text-purple-400">const</span> <span className="text-blue-300">poolSwaps</span> = <span className="text-purple-400">await</span> <span className="text-blue-300">sdk.pools()</span>.<span className="text-blue-300">getSwaps</span>(<span className="text-green-300">'poolAddress'</span>, <span className="text-white">{'{'}</span><span className="text-orange-300"> limit: 10 </span><span className="text-white">{'}'}</span>);</div>
-                <div><span className="text-purple-400">const</span> <span className="text-blue-300">timeseries</span> = <span className="text-purple-400">await</span> <span className="text-blue-300">sdk.pools()</span>.<span className="text-blue-300">getTimeSeries</span>(<span className="text-green-300">'poolAddress'</span>, <span className="text-white">{'{'}</span> interval: <span className="text-green-300">'hour'</span>, limit: <span className="text-orange-300">24</span> <span className="text-white">{'}'}</span>);</div>
+                <div><span className="text-purple-400">const</span> <span className="text-blue-300">poolSwaps</span> = <span className="text-purple-400">await</span> <span className="text-blue-300">sdk.pools()</span>.<span className="text-blue-300">getSwaps</span>(<span className="text-green-300">&#39;poolAddress&#39;</span>, <span className="text-white">{'{'}</span><span className="text-orange-300"> limit: 10 </span><span className="text-white">{'}'}</span>);</div>
+                <div><span className="text-purple-400">const</span> <span className="text-blue-300">timeseries</span> = <span className="text-purple-400">await</span> <span className="text-blue-300">sdk.pools()</span>.<span className="text-blue-300">getTimeSeries</span>(<span className="text-green-300">&#39;poolAddress&#39;</span>, <span className="text-white">{'{'}</span> interval: <span className="text-green-300">&#39;hour&#39;</span>, limit: <span className="text-orange-300">24</span> <span className="text-white">{'}'}</span>);</div>
               </div>
             </div>
           </div>
@@ -287,7 +287,7 @@ export default function Home() {
               </div>
               <div className="p-3 text-xs font-mono text-white">
                 <div><span className="text-purple-400">const</span> <span className="text-blue-300">globalStats</span> = <span className="text-purple-400">await</span> <span className="text-blue-300">sdk.stats()</span>.<span className="text-blue-300">getGlobal</span>();</div>
-                <div><span className="text-purple-400">const</span> <span className="text-blue-300">poolStats</span> = <span className="text-purple-400">await</span> <span className="text-blue-300">sdk.stats()</span>.<span className="text-blue-300">getPool</span>(<span className="text-green-300">'poolAddress'</span>);</div>
+                <div><span className="text-purple-400">const</span> <span className="text-blue-300">poolStats</span> = <span className="text-purple-400">await</span> <span className="text-blue-300">sdk.stats()</span>.<span className="text-blue-300">getPool</span>(<span className="text-green-300">&#39;poolAddress&#39;</span>);</div>
               </div>
             </div>
           </div>
@@ -309,12 +309,12 @@ export default function Home() {
                 <div><span className="text-purple-400">const</span> <span className="text-blue-300">ws</span> = <span className="text-purple-400">await</span> <span className="text-blue-300">sdk.websocket()</span>.<span className="text-blue-300">connect</span>();</div>
                 <div>
   <span className="text-blue-300">ws</span>.<span className="text-blue-300">on</span>(
-    <span className="text-green-300">'message'</span>, 
+    <span className="text-green-300">&#39;message&#39;</span>, 
     (<span className="text-blue-300">msg</span>) =&gt; <span className="text-white">{'{'}</span>
   </div>
   <div className="pl-4">
     <span className="text-blue-300">console.log</span>(
-      <span className="text-green-300">'Live update:'</span>, 
+      <span className="text-green-300">&#39;Live update:&#39;</span>, 
       <span className="text-blue-300">msg</span>
     );
   </div>
