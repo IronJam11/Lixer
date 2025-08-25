@@ -7,9 +7,7 @@ import lixerLogo from '@/assets/logos/Lixer.png';
 export default function SubscribePage() {
   const [form, setForm] = useState({
     email: "",
-    pool: "",
-    token: "",
-    wallet: ""
+    address: ""
   });
   const [submitted, setSubmitted] = useState(false);
 
@@ -19,8 +17,26 @@ export default function SubscribePage() {
 
   function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    setSubmitted(true);
-    // TODO: handle actual subscribe logic
+    // Create FormData
+    const formData = new FormData();
+    formData.append("email", form.email);
+    formData.append("address", form.address);
+
+  const apiUrl = process.env.NEXT_PUBLIC_API_URL || "https://lixer.onrender.com";
+  fetch(`${apiUrl}/subscriptions/subscribe`, {
+      method: "POST",
+      body: formData,
+    })
+      .then((res) => {
+        if (res.ok) {
+          setSubmitted(true);
+        } else {
+          alert("Subscription failed. Please try again.");
+        }
+      })
+      .catch(() => {
+        alert("Network error. Please try again.");
+      });
   }
 
   return (
@@ -50,41 +66,13 @@ export default function SubscribePage() {
               />
             </div>
             <div>
-              <label htmlFor="pool" className="block text-xs font-semibold text-gray-300 mb-2">Pool Address</label>
+              <label htmlFor="address" className="block text-xs font-semibold text-gray-300 mb-2">Address</label>
               <input
                 type="text"
-                name="pool"
-                id="pool"
+                name="address"
+                id="address"
                 required
-                value={form.pool}
-                onChange={handleChange}
-                className="w-full px-4 py-2 rounded-lg bg-black border border-gray-800 text-white focus:outline-none focus:ring-2 focus:ring-teal-500 placeholder:text-gray-600 transition-all"
-                placeholder="0x..."
-                autoComplete="off"
-              />
-            </div>
-            <div>
-              <label htmlFor="token" className="block text-xs font-semibold text-gray-300 mb-2">Token Address</label>
-              <input
-                type="text"
-                name="token"
-                id="token"
-                required
-                value={form.token}
-                onChange={handleChange}
-                className="w-full px-4 py-2 rounded-lg bg-black border border-gray-800 text-white focus:outline-none focus:ring-2 focus:ring-teal-500 placeholder:text-gray-600 transition-all"
-                placeholder="0x..."
-                autoComplete="off"
-              />
-            </div>
-            <div>
-              <label htmlFor="wallet" className="block text-xs font-semibold text-gray-300 mb-2">Wallet Address</label>
-              <input
-                type="text"
-                name="wallet"
-                id="wallet"
-                required
-                value={form.wallet}
+                value={form.address}
                 onChange={handleChange}
                 className="w-full px-4 py-2 rounded-lg bg-black border border-gray-800 text-white focus:outline-none focus:ring-2 focus:ring-teal-500 placeholder:text-gray-600 transition-all"
                 placeholder="0x..."

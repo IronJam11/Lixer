@@ -79,7 +79,7 @@ export default function Home() {
               <div className="flex-1 p-4">
                 <div className="font-mono text-xs leading-5">
                   
-                  <div className="text-gray-500">2   <span className="text-purple-400">import</span> <span className="text-blue-300">React</span>, <span className="text-blue-300">{'{ useState, useEffect }'}</span> <span className="text-purple-400">from</span> <span className="text-green-300">'react'</span>;</div>
+                  <div className="text-gray-500">2   <span className="text-purple-400">import</span> <span className="text-blue-300">React</span>, <span className="text-blue-300">{'{ useState, useEffect }'}</span> <span className="text-purple-400">from</span> <span className="text-green-300">react</span>;</div>
                   <div className="text-gray-500">3   <span className="text-purple-400">import</span> <span className="text-blue-300">{'{ Lixer }'}</span> <span className="text-purple-400">from</span> <span className="text-green-300">'@lixer/sdk'</span>;</div>
                   <div className="text-gray-500">4</div>
                   <div className="text-gray-500">5   <span className="text-purple-400">const</span> <span className="text-blue-300">sdk</span> = <span className="text-yellow-300">new</span> <span className="text-blue-300">Lixer</span><span className="text-white">(</span><span className="text-green-300">'https://api.lixer.xyz'</span><span className="text-white">);</span></div>
@@ -242,9 +242,9 @@ export default function Home() {
               />
               <span className="text-gray-400 text-sm">Lixer</span>
             </div>
-            <div className="text-gray-500 text-sm">
-              © 2025 Lixer. Building DeFi infrastructure.
-            </div>
+              <div className="text-gray-500 text-sm">
+                © 2025 Lixer. Building DeFi infrastructure.
+              </div>
           </div>
         </div>
       </footer>

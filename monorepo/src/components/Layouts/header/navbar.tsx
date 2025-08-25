@@ -6,7 +6,7 @@ import { usePathname } from "next/navigation";
 // Define main nav items to match the Hyperliquid style
 const NAV_ITEMS = [
   
-  { title: "Docs", url: "/docs" },
+  { title: "Docs", url: "https://ironjams-organization.gitbook.io/lixer-docs" },
   { title: "Subscribe", url: "/subscribe" }
 ];
 
